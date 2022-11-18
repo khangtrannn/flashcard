@@ -8,13 +8,15 @@ import { getApp, initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { connectFirestoreEmulator, Firestore, initializeFirestore } from '@angular/fire/firestore/firebase';
+import {
+  connectFirestoreEmulator,
+  Firestore,
+  initializeFirestore,
+} from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FlashcardComponent,
-  ],
+  declarations: [AppComponent, FlashcardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,8 +35,9 @@ import { connectFirestoreEmulator, Firestore, initializeFirestore } from '@angul
       }
       return firestore;
     }),
+    provideStorage(() => getStorage()),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
