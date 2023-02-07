@@ -8,10 +8,16 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { USE_EMULATOR as USE_DATABASE_EMULATOR } from '@angular/fire/compat/database';
-
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 @NgModule({
-  declarations: [AppComponent, FlashcardComponent],
+  declarations: [
+    AppComponent,
+    HomePageComponent,
+    FlashcardComponent,
+    DashboardComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
