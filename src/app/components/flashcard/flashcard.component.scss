@@ -5,7 +5,7 @@
   transform-style: preserve-3d;
   perspective: 500px;
 
-  &:hover {
+  &.flipped {
     .face {
       &.front {
         transform: rotateY(180deg);
@@ -32,29 +32,29 @@
     backface-visibility: hidden;
 
     &.front {
-      &::before {
-        content: "";
-        position: absolute;
-        bottom: 40px;
-        right: 40px;
-        width: 60px;
-        height: 60px;
-        background: #fff;
-        border-radius: 50%;
-        opacity: 0.5;
-      }
+      // &::before {
+      //   content: "";
+      //   position: absolute;
+      //   bottom: 40px;
+      //   right: 40px;
+      //   width: 60px;
+      //   height: 60px;
+      //   background: #fff;
+      //   border-radius: 50%;
+      //   opacity: 0.5;
+      // }
 
-      &::after {
-        content: "";
-        position: absolute;
-        bottom: 40px;
-        right: 80px;
-        width: 60px;
-        height: 60px;
-        background: #fff;
-        border-radius: 50%;
-        opacity: 0.7;
-      }
+      // &::after {
+      //   content: "";
+      //   position: absolute;
+      //   bottom: 40px;
+      //   right: 80px;
+      //   width: 60px;
+      //   height: 60px;
+      //   background: #fff;
+      //   border-radius: 50%;
+      //   opacity: 0.7;
+      // }
 
       .debit {
         position: absolute;
@@ -190,16 +190,5 @@
     align-items: center;
     min-height: 100vh;
     background: #1a1a1a;
-
-    &::before {
-      content: "";
-      position: absolute;
-      bottom: -40%;
-      left: 40%;
-      width: 600px;
-      height: 600px;
-      background: linear-gradient(#f00, #f0f);
-      border-radius: 50%;
-    }
   }
 }
