@@ -20,7 +20,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   keyEvent(event: KeyboardEvent) {
     if (event.key === KEY.space) {
       event.stopImmediatePropagation();
-      this.currentIndex += 1;
+      this.currentIndex = this.flashcards[this.currentIndex + 1] ? this.currentIndex + 1 : 0;
     }
   }
 
