@@ -1,4 +1,11 @@
-import { Component, HostListener, Input } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { KEY } from 'src/app/constants';
 import { FlashcardService } from 'src/app/services/flashcard.service';
 
@@ -7,13 +14,23 @@ import { FlashcardService } from 'src/app/services/flashcard.service';
   templateUrl: './flashcard.component.html',
   styleUrls: ['./flashcard.component.scss'],
 })
-export class FlashcardComponent {
+export class FlashcardComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
   shouldFlip = false;
 
   @Input() front: string | undefined;
   @Input() back: string | undefined;
 
   constructor(private flashcardService: FlashcardService) {}
+
+  ngOnInit(): void {
+    this.flashcardService
+      .onFlip()
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((showFace) => {
+        this.shouldFlip = showFace === 'back';
+      });
+  }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -22,7 +39,16 @@ export class FlashcardComponent {
     }
 
     if (event.key === KEY.f) {
-      this.shouldFlip = !this.shouldFlip;
+      this.toggleFlipFlashcard();
     }
+  }
+
+  private toggleFlipFlashcard(): void {
+    this.shouldFlip = !this.shouldFlip;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

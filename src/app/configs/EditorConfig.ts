@@ -1,0 +1,30 @@
+export const EditorConfig = {
+  editable: true,
+  outline: false,
+  sanitize: false,
+  toolbarHiddenButtons: [
+    [
+      'subscript',
+      'superscript',
+      'justifyLeft',
+      'justifyCenter',
+      'justifyRight',
+      'justifyFull',
+      'indent',
+      'outdent',
+      'insertUnorderedList',
+      'insertOrderedList',
+      'fontName',
+    ],
+    [
+      'customClasses',
+      'link',
+      'unlink',
+      'insertImage',
+      'insertVideo',
+      'insertHorizontalRule',
+      'removeFormat',
+      'toggleEditorMode',
+    ],
+  ],
+};

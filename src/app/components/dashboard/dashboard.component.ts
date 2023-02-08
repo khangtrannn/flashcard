@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { EditorConfig } from '../../configs/EditorConfig';
+import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import {
   Flashcard,
@@ -10,27 +11,28 @@ import {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit, AfterViewInit {
+  editorConfig = EditorConfig;
   front = '';
   back = '';
 
   constructor(
     public flashcardService: FlashcardService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private elementRef: ElementRef<HTMLDivElement>
   ) {}
+
+  ngOnInit(): void {
+    this.flashcardService.disableShortcutListener();
+  }
 
   onAddFlashcard(): void {
     if (!this.front) {
       return;
     }
 
-    const payload: Flashcard = {
-      front: this.front,
-      back: this.back,
-    };
-
     this.flashcardService
-      .create(payload)
+      .create(this.getPayload())
       .then((_) => {
         this.resetState();
         this.toastr.success('Add new flashcard successfully!');
@@ -39,6 +41,21 @@ export class DashboardComponent {
         console.error(err);
         this.toastr.error('Add new flashcard error!');
       });
+  }
+
+  ngAfterViewInit(): void {
+    this.elementRef.nativeElement.querySelectorAll('angular-editor')
+      .forEach((editor) => editor
+        .querySelector('.angular-editor-textarea')!
+        .addEventListener('focus', () => this.flashcardService.flip(editor.getAttribute('name')!)
+      ));
+  }
+
+  private getPayload(): Flashcard {
+    return {
+      front: this.front,
+      back: this.back,
+    };
   }
 
   private resetState(): void {

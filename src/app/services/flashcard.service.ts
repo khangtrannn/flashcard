@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
-import { ThenableReference } from '@angular/fire/database';
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subject } from 'rxjs';
 
 export interface Flashcard {
   key?: string;
@@ -15,7 +14,8 @@ export interface Flashcard {
 export class FlashcardService {
   private dbPath = '/flashcards';
   private _shouldListenShortcut = true;
-  flashcardsRef: AngularFireList<Flashcard>;
+  private flip$ = new Subject<string>();
+  private flashcardsRef: AngularFireList<Flashcard>;
 
   constructor(private db: AngularFireDatabase) {
     this.flashcardsRef = db.list<Flashcard>(this.dbPath);
@@ -39,11 +39,23 @@ export class FlashcardService {
     return this.flashcardsRef.remove(key);
   }
 
-  get shouldListenShortcut(): boolean {
-    return this._shouldListenShortcut;
+  flip(face: string): void {
+    this.flip$.next(face)
   }
 
-  set shouldListenShortcut(value: boolean) {
-    this._shouldListenShortcut = value;
+  onFlip(): Observable<string> {
+    return this.flip$.asObservable();
+  }
+
+  disableShortcutListener(): void {
+    this._shouldListenShortcut = false;
+  }
+  
+  enableShortcutListener(): void {
+    this._shouldListenShortcut = true;
+  }
+
+  get shouldListenShortcut(): boolean {
+    return this._shouldListenShortcut;
   }
 }

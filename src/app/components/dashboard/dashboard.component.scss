@@ -1,3 +1,36 @@
 .shadow {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
+
+:host ::ng-deep {
+  .angular-editor-toolbar {
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .angular-editor-wrapper {
+    .angular-editor-textarea {
+      resize: none;
+      border-radius: 5px;
+      border: 1px solid #3e3e3e !important;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      color: white;
+      margin-top: 0;
+      padding-top: 1rem !important;
+      min-height: 10rem !important;
+
+      &::after, &::before {
+        display: none;
+      }
+    }
+
+    .angular-editor-placeholder {
+      padding-top: 1rem !important;
+      font-size: 0.875rem;
+    }
+  }
+}
