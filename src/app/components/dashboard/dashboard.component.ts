@@ -12,8 +12,11 @@ import {
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
+  readonly FRONT_TEMPLATE =
+    '<span style="background-color: rgb(219, 15, 15);">phrase</span>';
+
   editorConfig = EditorConfig;
-  front = '';
+  front = this.FRONT_TEMPLATE;
   back = '';
 
   constructor(
@@ -44,11 +47,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.elementRef.nativeElement.querySelectorAll('angular-editor')
-      .forEach((editor) => editor
-        .querySelector('.angular-editor-textarea')!
-        .addEventListener('focus', () => this.flashcardService.flip(editor.getAttribute('name')!)
-      ));
+    this.elementRef.nativeElement
+      .querySelectorAll('angular-editor')
+      .forEach((editor) =>
+        editor
+          .querySelector('.angular-editor-textarea')!
+          .addEventListener('focus', () =>
+            this.flashcardService.flip(editor.getAttribute('name')!)
+          )
+      );
   }
 
   private getPayload(): Flashcard {

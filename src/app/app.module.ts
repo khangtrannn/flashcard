@@ -15,6 +15,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FlashcardComponent } from './components/flashcard/flashcard.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     HomePageComponent,
     FlashcardComponent,
     DashboardComponent,
+    SafeHtmlPipe,
   ],
   imports: [
     BrowserModule,
