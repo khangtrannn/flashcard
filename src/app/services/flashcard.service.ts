@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
+import { ThenableReference } from '@angular/fire/database';
 import { map, Observable } from 'rxjs';
 
 export interface Flashcard {
-  key: string;
+  key?: string;
   front: string;
   back: string;
 }
@@ -26,7 +27,7 @@ export class FlashcardService {
     );
   }
 
-  create(flashcard: Flashcard): any {
+  create(flashcard: Flashcard) {
     return this.flashcardsRef.push(flashcard);
   }
 

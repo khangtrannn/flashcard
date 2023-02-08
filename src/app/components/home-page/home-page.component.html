@@ -1,3 +1,11 @@
 <div class="wrapper">
-  <app-flashcard></app-flashcard>
+  <ng-container *ngIf="(flashcards$ | async) as flashcards">
+    <ng-container *ngIf="flashcards.length; else noFlashcards">
+      <app-flashcard></app-flashcard>
+    </ng-container>
+  </ng-container>
 </div>
+
+<ng-template #noFlashcards>
+  <span class="text-white">No flashcard to show</span>
+</ng-template>

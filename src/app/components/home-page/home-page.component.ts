@@ -7,6 +7,8 @@ import { FlashcardService } from 'src/app/services/flashcard.service';
   styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent implements OnInit {
+  flashcards$ = this.flashcardService.getAll();
+
   constructor(private flashcardService: FlashcardService) {}
 
   ngOnInit() {
