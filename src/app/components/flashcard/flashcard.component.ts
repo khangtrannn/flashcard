@@ -1,10 +1,6 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input } from '@angular/core';
+import { KEY } from 'src/app/constants';
 import { FlashcardService } from 'src/app/services/flashcard.service';
-
-const KEY = {
-  space: ' ',
-  f: 'f',
-};
 
 @Component({
   selector: 'app-flashcard',

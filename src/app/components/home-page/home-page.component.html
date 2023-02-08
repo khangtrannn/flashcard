@@ -1,10 +1,15 @@
 <div class="wrapper">
-  <ng-container *ngIf="(flashcards$ | async) as flashcards">
+  <ng-container *ngIf="!isLoading; else loading">
     <ng-container *ngIf="flashcards.length; else noFlashcards">
-      <app-flashcard></app-flashcard>
+      <app-flashcard *ngIf="flashcards[currentIndex] as flashcard" [front]="flashcard
+      .front" [back]="flashcard.back"></app-flashcard>
     </ng-container>
   </ng-container>
 </div>
+
+<ng-template #loading>
+  <span class="text-white">Loading...</span>
+</ng-template>
 
 <ng-template #noFlashcards>
   <span class="text-white">No flashcard to show</span>

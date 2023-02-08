@@ -1,19 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { FlashcardService } from 'src/app/services/flashcard.service';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
+import { KEY } from 'src/app/constants';
+import { Flashcard, FlashcardService } from 'src/app/services/flashcard.service';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })
-export class HomePageComponent implements OnInit {
-  flashcards$ = this.flashcardService.getAll();
+export class HomePageComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  flashcards: Flashcard[] = [];
+  currentIndex = 0;
+  isLoading = true;
 
   constructor(private flashcardService: FlashcardService) {}
 
-  ngOnInit() {
-    this.flashcardService.getAll().subscribe((data) => {
-      console.log(data);
-    })
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (event.key === KEY.space) {
+      event.stopImmediatePropagation();
+      this.currentIndex += 1;
+    }
+  }
+
+  ngOnInit(): void {
+    this.flashcardService.getAll().pipe(takeUntil(this.destroy$)).subscribe((flashcards) => {
+      this.flashcards = flashcards;
+      this.isLoading = false;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
