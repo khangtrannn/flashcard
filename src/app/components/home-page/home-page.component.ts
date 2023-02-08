@@ -11,8 +11,10 @@ import { Flashcard, FlashcardService } from 'src/app/services/flashcard.service'
   animations: [
     trigger('swapAnimation', [
       transition(':leave', [
-        style({ position: 'absolute' }),
-        animate('0.8s ease-out', style({ transform: 'translateX(100%)', opacity: 0 })),
+        style({ position: 'absolute', 'transform-origin': 'bottom right',  }),
+        animate('0.8s ease-out', style({ 
+          transform: 'rotate(50deg)', opacity: 0 
+        })),
       ]),
     ])
   ],
