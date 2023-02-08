@@ -1,7 +1,7 @@
 <div class="wrapper">
   <ng-container *ngIf="!isLoading; else loading">
     <ng-container *ngIf="flashcards.length; else noFlashcards">
-      <div *ngFor="let i of [currentIndex]">
+      <div *ngFor="let i of [currentIndex]" [@swapAnimation]>
         <app-flashcard *ngIf="flashcards[currentIndex] as flashcard" [front]="flashcard
       .front" [back]="flashcard.back"></app-flashcard>
       </div>

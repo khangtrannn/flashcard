@@ -1,3 +1,4 @@
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { KEY } from 'src/app/constants';
@@ -7,6 +8,14 @@ import { Flashcard, FlashcardService } from 'src/app/services/flashcard.service'
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
+  animations: [
+    trigger('swapAnimation', [
+      transition(':leave', [
+        style({ position: 'absolute' }),
+        animate('0.8s ease-out', style({ transform: 'translateX(100%)', opacity: 0 })),
+      ]),
+    ])
+  ],
 })
 export class HomePageComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
