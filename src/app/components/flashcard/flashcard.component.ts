@@ -1,4 +1,10 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { FlashcardService } from 'src/app/services/flashcard.service';
+
+const KEY = {
+  space: ' ',
+  f: 'f',
+};
 
 @Component({
   selector: 'app-flashcard',
@@ -6,16 +12,20 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./flashcard.component.scss'],
 })
 export class FlashcardComponent {
-  readonly KEY = {
-    space: ' ',
-    f: 'f',
-  };
-
   shouldFlip = false;
+
+  @Input() front: string | undefined;
+  @Input() back: string | undefined;
+
+  constructor(private flashcardService: FlashcardService) {}
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (event.key === this.KEY.f) {
+    if (!this.flashcardService.shouldListenShortcut) {
+      return;
+    }
+
+    if (event.key === KEY.f) {
       this.shouldFlip = !this.shouldFlip;
     }
   }

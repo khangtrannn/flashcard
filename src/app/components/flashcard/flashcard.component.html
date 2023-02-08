@@ -1,8 +1,8 @@
 <div [class.flipped]="shouldFlip" class="card">
   <div class="face front text-white flex justify-center items-center">
-    front end
+    {{ front || 'Front' }}
   </div>
   <div class="face back text-white flex justify-center items-center">
-    back part
+    {{ back || 'Back' }}
   </div>
 </div>

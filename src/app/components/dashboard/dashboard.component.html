@@ -1,23 +1,33 @@
-<div class="mx-auto max-w-6xl justify-between flex px-4 py-16">
-  <div class="rounded-lg p-8 bg-white/[.05] shadow">
-    <form class="space-y-4">
-      <textarea
-        class="text-white w-full bg-transparent border-[1px] resize-none rounded-lg border-[#3e3e3e] p-3 text-sm"
-        placeholder="Front"
-        rows="8"></textarea>
-
-      <textarea
-        class="text-white w-full bg-transparent border-[1px] resize-none rounded-lg border-[#3e3e3e] p-3 text-sm"
-        placeholder="Back"
-        rows="8"></textarea>
-
-      <button
-        type="submit"
-        class="mt-4 text-sm w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto">
-        Add Flashcard
-      </button>
-    </form>
+<div class="flex min-h-[100vh] justify-center items-center">
+  <div class="flex h-fit gap-14">
+    <div class="rounded-lg p-8 bg-white/[.05] shadow">
+      <form class="space-y-4">
+        <textarea
+          class="text-white w-full bg-transparent border-[1px] resize-none rounded-lg border-[#3e3e3e] p-3 text-sm"
+          placeholder="Front"
+          (focus)="flashcardService.shouldListenShortcut = false"
+          (blur)="flashcardService.shouldListenShortcut = true"
+          [(ngModel)]="front"
+          name="front"
+          rows="8"></textarea>
+  
+        <textarea
+          class="text-white w-full bg-transparent border-[1px] resize-none rounded-lg border-[#3e3e3e] p-3 text-sm"
+          placeholder="Back"
+          (focus)="flashcardService.shouldListenShortcut = false"
+          (blur)="flashcardService.shouldListenShortcut = true"
+          [(ngModel)]="back"
+          name="front"
+          rows="8"></textarea>
+  
+        <button
+          (click)="onAddFlashcard()"
+          class="mt-4 text-sm w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white focus:outline-none">
+          Add Flashcard
+        </button>
+      </form>
+    </div>
+  
+    <app-flashcard [front]="front" [back]="back"></app-flashcard>
   </div>
-
-  <app-flashcard></app-flashcard>
 </div>
