@@ -7,7 +7,7 @@ export const environment = {
     authDomain: 'flashcard-f4ded.firebaseapp.com',
     messagingSenderId: '148384928412',
     measurementId: 'G-M2F2WXMZS3',
+    databaseURL: "https://flashcard-f4ded-default-rtdb.asia-southeast1.firebasedatabase.app",
   },
-  useEmulators: false,
   production: true,
 };

@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { FlashcardComponent } from './components/flashcard/flashcard.component';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
-import { provideDatabase, getDatabase } from '@angular/fire/database';
-import { USE_EMULATOR as USE_DATABASE_EMULATOR } from '@angular/fire/compat/database';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { FlashcardComponent } from './components/flashcard/flashcard.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -31,10 +31,7 @@ import { ToastrModule } from 'ngx-toastr';
     provideDatabase(() => getDatabase()),
   ],
   providers: [
-    {
-      provide: USE_DATABASE_EMULATOR,
-      useValue: environment.useEmulators ? ['localhost', 9000] : undefined,
-    },
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase }
   ],
   bootstrap: [AppComponent],
 })

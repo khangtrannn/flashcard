@@ -16,6 +16,10 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {}
 
   onAddFlashcard(): void {
+    if (!this.front) {
+      return;
+    }
+
     this.resetState();
     this.toastr.success('Add new flashcard successfully!');
   }
