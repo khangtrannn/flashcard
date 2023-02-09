@@ -1,8 +1,12 @@
-<div  class="min-h-[100px]">
+<div  class="min-h-[150px]">
   <ng-container *ngIf="!isLoading; else loadingCategories">
     <ng-select #categorySelect class="category" [(ngModel)]="selectedCategory" placeholder="Flashcard category" [loadingText]="'Loading...'" notFoundText="No categories found. Please insert new one." addTagText="Add new category" [clearable]="false" [addTag]="handleAddNewCategory.bind(this)">
       <ng-option *ngFor="let category of flashcardCategories" [value]="category.name">{{ category.name }}</ng-option>
     </ng-select>
+
+    <div class="text-white text-sm mt-2">
+      <span (click)="onRemoveCategory()" class="flex items-center gap-1 cursor-pointer"><i class="fa fa-times-circle" aria-hidden="true"></i> English</span>
+    </div>
   </ng-container>
 </div>
 

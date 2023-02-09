@@ -31,7 +31,7 @@ export class CategoryService {
     return this.cache$;
   }
 
-  create(category: string): void {
-    this.categoryRef.push({ name: category, isHidden: false });
+  create(category: string) {
+    return this.categoryRef.push({ name: category, isHidden: false });
   }
 }

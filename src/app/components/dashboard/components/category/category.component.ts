@@ -27,8 +27,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   handleAddNewCategory(category: string): string {
-    this.categoryService.create(category);
+    this.categoryService.create(category).then((data) => console.log(data));
     return category;
+  }
+
+  onRemoveCategory(): void {
+
   }
 
   ngOnDestroy(): void {
