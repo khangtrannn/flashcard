@@ -4,6 +4,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { KEY } from 'src/app/constants';
 import { Flashcard, FlashcardService } from 'src/app/services/flashcard.service';
 
+const CACHE: { isInitialize: boolean; flashcards: Flashcard[] } = {
+  isInitialize: true,
+  flashcards: []
+};
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -21,9 +26,9 @@ import { Flashcard, FlashcardService } from 'src/app/services/flashcard.service'
 })
 export class HomePageComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  flashcards: Flashcard[] = [];
+  flashcards: Flashcard[] = CACHE.flashcards;
   currentIndex = 0;
-  isLoading = true;
+  isLoading = CACHE.isInitialize;
 
   constructor(private flashcardService: FlashcardService) {}
 
@@ -39,6 +44,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.flashcardService.getAll().pipe(takeUntil(this.destroy$)).subscribe((flashcards) => {
       this.flashcards = flashcards;
       this.isLoading = false;
+      CACHE.isInitialize = false;
+      CACHE.flashcards = flashcards;
     });
   }
 
