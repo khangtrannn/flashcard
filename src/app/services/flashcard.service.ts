@@ -17,14 +17,20 @@ export class FlashcardService {
   private flip$ = new Subject<string>();
   private flashcardsRef: AngularFireList<Flashcard>;
 
+  private cache$: Observable<Flashcard[]> | undefined;
+
   constructor(private db: AngularFireDatabase) {
     this.flashcardsRef = db.list<Flashcard>(this.dbPath);
   }
 
   getAll(): Observable<Flashcard[]> {
-    return this.flashcardsRef.snapshotChanges().pipe(
-      map((changes) => changes.map(change => ({ key: change.payload.key, ...change.payload.val() }) as Flashcard))
-    );
+    if (!this.cache$) {
+      this.cache$ = this.flashcardsRef.snapshotChanges().pipe(
+        map((changes) => changes.map(change => ({ key: change.payload.key, ...change.payload.val() }) as Flashcard))
+      );
+    }
+    
+    return this.cache$;
   }
 
   create(flashcard: Flashcard) {
