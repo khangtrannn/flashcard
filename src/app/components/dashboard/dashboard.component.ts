@@ -1,5 +1,5 @@
 import { EditorConfig } from '../../configs/EditorConfig';
-import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import {
   Flashcard,
@@ -11,7 +11,7 @@ import {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   readonly FRONT_TEMPLATE =
     '<div style="text-align: center;"><span style="background-color: rgb(219, 15, 15);"><font size="3">phrase</font></span></div><div style="text-align: center;"><span style="background-color: rgb(219, 15, 15); font-size: 0.875rem;"><br></span></div><div style="text-align: center;"><span style="text-align: center;">Vietnamese meaning</span><br></div>';
   
@@ -70,5 +70,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   private resetState(): void {
     this.front = '';
     this.back = '';
+  }
+
+  ngOnDestroy(): void {
+    this.flashcardService.enableShortcutListener();
   }
 }
