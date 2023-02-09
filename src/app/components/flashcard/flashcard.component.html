@@ -1,4 +1,8 @@
 <div [class.flipped]="shouldFlip" class="card">
-  <div [innerHTML]="front ? (front | safeHtml) : 'Front'" class="face front text-white flex justify-center items-center"></div>
-  <div [innerHTML]="back ? (back | safeHtml) : 'Back'" class="face back text-white flex justify-center items-center"></div>
+  <div class="face front text-white flex justify-center items-center">
+    <div [innerHTML]="front ? (front | safeHtml) : 'Front'"></div>
+  </div>
+  <div class="face back text-white flex justify-center items-center">
+    <div [innerHTML]="back ? (back | safeHtml) : 'Back'"></div>
+  </div>
 </div>

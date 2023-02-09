@@ -13,11 +13,13 @@ import {
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   readonly FRONT_TEMPLATE =
-    '<span style="background-color: rgb(219, 15, 15);">phrase</span>';
+    '<div style="text-align: center;"><span style="background-color: rgb(219, 15, 15);"><font size="3">phrase</font></span></div><div style="text-align: center;"><span style="background-color: rgb(219, 15, 15); font-size: 0.875rem;"><br></span></div><div style="text-align: center;"><span style="text-align: center;">Vietnamese meaning</span><br></div>';
+  
+  readonly BACK_TEMPLATE = '<div style="text-align: center;"><font size="3">Example</font></div>';
 
   editorConfig = EditorConfig;
   front = this.FRONT_TEMPLATE;
-  back = '';
+  back = this.BACK_TEMPLATE;
 
   constructor(
     public flashcardService: FlashcardService,
