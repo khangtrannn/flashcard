@@ -11,9 +11,9 @@ import { Flashcard, FlashcardService } from 'src/app/services/flashcard.service'
   animations: [
     trigger('swapAnimation', [
       transition(':leave', [
-        style({ position: 'absolute', 'transform-origin': 'bottom right',  }),
-        animate('0.8s ease-out', style({ 
-          transform: 'rotate(50deg)', opacity: 0 
+        style({ position: 'absolute', 'transform-origin': 'bottom right', opacity: 1, 'z-index': 1, background: '#262626', 'border-radius': '15px' }),
+        animate('0.7s ease-out', style({ 
+          transform: 'rotate(72deg)', opacity: 1, background: '#262626'
         })),
       ]),
     ])
