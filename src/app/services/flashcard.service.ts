@@ -37,14 +37,6 @@ export class FlashcardService {
     return this.flashcardsRef.push(flashcard);
   }
 
-  update(key: string, value: any): Promise<void> {
-    return this.flashcardsRef.update(key, value);
-  }
-
-  delete(key: string): Promise<void> {
-    return this.flashcardsRef.remove(key);
-  }
-
   flip(face: string): void {
     this.flip$.next(face)
   }
