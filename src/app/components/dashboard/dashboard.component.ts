@@ -5,6 +5,7 @@ import {
   Flashcard,
   FlashcardService,
 } from 'src/app/services/flashcard.service';
+import { CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,11 +25,15 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public flashcardService: FlashcardService,
     private toastr: ToastrService,
+    private categoryService: CategoryService,
     private elementRef: ElementRef<HTMLDivElement>
   ) {}
 
   ngOnInit(): void {
     this.flashcardService.disableShortcutListener();
+    this.categoryService.getAll().subscribe((categories) => {
+      console.log(categories);
+    })
   }
 
   onAddFlashcard(): void {
