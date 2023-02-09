@@ -1,8 +1,8 @@
 <div class="mt-20 mx-auto grid grid-rows-1 w-fit content-center">
-  <p class="text-red-500 text-sm italic mb-10">*Must be at least one category to add new flashcard</p>
-
   <div class="flex h-fit gap-14">
     <div class="rounded-lg p-8 bg-white/[.05] shadow">
+      <app-category></app-category>
+
       <angular-editor id="front" name="front" [config]="editorConfig"
         placeholder="Front" [(ngModel)]="front"></angular-editor>
 

@@ -5,6 +5,7 @@ import { map, Observable } from 'rxjs';
 export interface Category {
   key?: string;
   name: string;
+  isHidden: boolean;
 }
 
 @Injectable({
@@ -28,5 +29,9 @@ export class CategoryService {
     }
     
     return this.cache$;
+  }
+
+  create(category: string): void {
+    this.categoryRef.push({ name: category, isHidden: false });
   }
 }

@@ -1,11 +1,12 @@
-import { EditorConfig } from '../../configs/EditorConfig';
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Subject, take, takeUntil } from 'rxjs';
+import { Category, CategoryService } from 'src/app/services/category.service';
 import {
   Flashcard,
-  FlashcardService,
+  FlashcardService
 } from 'src/app/services/flashcard.service';
-import { CategoryService } from 'src/app/services/category.service';
+import { EditorConfig } from '../../configs/EditorConfig';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,9 +32,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.flashcardService.disableShortcutListener();
-    this.categoryService.getAll().subscribe((categories) => {
-      console.log(categories);
-    })
   }
 
   onAddFlashcard(): void {
