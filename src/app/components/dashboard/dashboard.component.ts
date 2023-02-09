@@ -68,8 +68,8 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private resetState(): void {
-    this.front = '';
-    this.back = '';
+    this.front = this.FRONT_TEMPLATE;
+    this.back = this.BACK_TEMPLATE;
   }
 
   ngOnDestroy(): void {
