@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { combineLatest, forkJoin, Subject, takeUntil } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { combineLatest, Subject, takeUntil } from 'rxjs';
 import { KEY } from 'src/app/constants';
 import { CategoryService } from 'src/app/services/category.service';
 import {
@@ -48,13 +49,19 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   constructor(
     private flashcardService: FlashcardService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private toastr: ToastrService
   ) {}
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
     if (event.key === KEY.space) {
       event.stopImmediatePropagation();
+
+      if (this.flashcards.length === 1) {
+        this.toastr.warning('There is only 1 flashcard of this category!');
+      }
+
       this.currentIndex = this.flashcards[this.currentIndex + 1]
         ? this.currentIndex + 1
         : 0;
@@ -68,9 +75,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     ])
       .pipe(takeUntil(this.destroy$))
       .subscribe(([flashcards, selectedCategory]) => {
-        console.log(flashcards);
-        console.log(selectedCategory);
-
         this.isLoading = false;
         this.flashcards = flashcards.filter(
           (flashcard) => flashcard.category === selectedCategory

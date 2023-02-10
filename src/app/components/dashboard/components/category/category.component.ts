@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { combineLatest, filter, Subject, take, takeUntil } from 'rxjs';
+import { combineLatest, Subject, takeUntil } from 'rxjs';
 import { Category, CategoryService } from 'src/app/services/category.service';
 
 @Component({
