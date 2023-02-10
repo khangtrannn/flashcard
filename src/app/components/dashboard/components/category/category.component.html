@@ -1,7 +1,7 @@
 <div  class="min-h-[150px]">
   <ng-container *ngIf="!isLoading; else loadingCategories">
     <ng-select *ngIf="!hideIfNoFlashcards || (hideIfNoFlashcards && flashcardCategories.length)"
-      #categorySelect class="category" [ngModel]="selectedCategory$ | async"
+      class="category" [ngModel]="selectedCategory"
       (ngModelChange)="categoryService.setSelectedCategory($event)"
       placeholder="Flashcard category" [loadingText]="'Loading...'" notFoundText="No categories found. Please insert new one."
       addTagText="Add new category" [clearable]="false" [addTag]="handleAddNewCategory.bind(this)">

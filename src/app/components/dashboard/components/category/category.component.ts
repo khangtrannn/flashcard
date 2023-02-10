@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { filter, Subject, take, takeUntil } from 'rxjs';
+import { combineLatest, filter, Subject, take, takeUntil } from 'rxjs';
 import { Category, CategoryService } from 'src/app/services/category.service';
 
 @Component({
@@ -16,17 +16,25 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   isLoading = true;
   flashcardCategories: Category[] = [];
-  selectedCategory$ = this.categoryService.getSelectedCategory();
+  selectedCategory: string | undefined;
 
   constructor(public categoryService: CategoryService) {}
 
   ngOnInit(): void {
-    this.categoryService
-      .getAll()
+    combineLatest([
+      this.categoryService.getAll(),
+      this.categoryService.getSelectedCategory(),
+    ])
       .pipe(takeUntil(this.destroy$))
-      .subscribe((categories) => {
+      .subscribe(([categories, selectedCategory]) => {
         this.isLoading = false;
         this.flashcardCategories = categories;
+
+        if (selectedCategory) {
+          this.selectedCategory = this.flashcardCategories.find(
+            (category) => category.key === selectedCategory
+          )?.name;
+        }
       });
   }
 

@@ -54,7 +54,11 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         this.flashcardService
-          .create(this.getPayload())
+          .create({
+            front: this.front,
+            back: this.back,
+            category: selectedCategory,
+          })
           .then((_) => {
             this.resetState();
             this.toastr.success('Add new flashcard successfully!');
@@ -76,13 +80,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
             this.flashcardService.flip(editor.getAttribute('name')!)
           )
       );
-  }
-
-  private getPayload(): Flashcard {
-    return {
-      front: this.front,
-      back: this.back,
-    };
   }
 
   private resetState(): void {

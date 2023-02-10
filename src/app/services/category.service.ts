@@ -39,13 +39,7 @@ export class CategoryService {
                 } as Category)
             )
             .filter((category) => !category.isHidden)
-        ),
-        tap((categories) => {
-          const selectedCategory = this.selectedCategory.getValue();
-          if (!selectedCategory) {
-            this.setSelectedCategory(categories[0].key!);
-          }
-        })
+        )
       );
     }
 

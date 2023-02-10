@@ -6,10 +6,11 @@ export interface Flashcard {
   key?: string;
   front: string;
   back: string;
+  category: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FlashcardService {
   private dbPath = '/flashcards';
@@ -25,11 +26,21 @@ export class FlashcardService {
 
   getAll(): Observable<Flashcard[]> {
     if (!this.cache$) {
-      this.cache$ = this.flashcardsRef.snapshotChanges().pipe(
-        map((changes) => changes.map(change => ({ key: change.payload.key, ...change.payload.val() }) as Flashcard))
-      );
+      this.cache$ = this.flashcardsRef
+        .snapshotChanges()
+        .pipe(
+          map((changes) =>
+            changes.map(
+              (change) =>
+                ({
+                  key: change.payload.key,
+                  ...change.payload.val(),
+                } as Flashcard)
+            )
+          )
+        );
     }
-    
+
     return this.cache$;
   }
 
@@ -38,7 +49,7 @@ export class FlashcardService {
   }
 
   flip(face: string): void {
-    this.flip$.next(face)
+    this.flip$.next(face);
   }
 
   onFlip(): Observable<string> {
@@ -48,7 +59,7 @@ export class FlashcardService {
   disableShortcutListener(): void {
     this._shouldListenShortcut = false;
   }
-  
+
   enableShortcutListener(): void {
     this._shouldListenShortcut = true;
   }
