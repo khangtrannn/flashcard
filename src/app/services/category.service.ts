@@ -18,7 +18,7 @@ export class CategoryService {
   private categoryRef: AngularFireList<Category>;
 
   private cache$: Observable<Category[]> | undefined;
-  private selectedCategory = new BehaviorSubject<string | null>(
+  private selectedCategory$ = new BehaviorSubject<string | null>(
     window.localStorage.getItem(SELECT_CATEGORY_KEY)
   );
 
@@ -52,14 +52,18 @@ export class CategoryService {
 
   hide(id: string): void {
     this.categoryRef.update(id, { isHidden: true });
+
+    if (this.selectedCategory$.getValue() === id) {
+      window.localStorage.removeItem(SELECT_CATEGORY_KEY);
+    }
   }
 
   setSelectedCategory(id: string): void {
     window.localStorage.setItem(SELECT_CATEGORY_KEY, id);
-    this.selectedCategory.next(id);
+    this.selectedCategory$.next(id);
   }
 
   getSelectedCategory(): Observable<string | null> {
-    return this.selectedCategory.asObservable();
+    return this.selectedCategory$.asObservable();
   }
 }
