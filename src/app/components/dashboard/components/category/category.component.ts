@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { filter, Subject, take, takeUntil } from 'rxjs';
 import { Category, CategoryService } from 'src/app/services/category.service';
 
@@ -9,8 +9,12 @@ import { Category, CategoryService } from 'src/app/services/category.service';
 })
 export class CategoryComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  isLoading = true;
 
+  @Input() showList = true;
+  @Input() hideIfNoFlashcards = false;
+  @Input() showLoading = true;
+
+  isLoading = true;
   flashcardCategories: Category[] = [];
   selectedCategory: string | undefined;
 

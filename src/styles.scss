@@ -15,3 +15,31 @@
 body {
   background: #1a1a1a;
 }
+
+
+:host ::ng-deep {
+  .ng-select {
+    font-size: 0.875rem;
+
+    .ng-select-container {
+      .ng-value-container {
+        color: white;
+        padding-top: 14px;
+
+        .ng-placeholder {
+          color: #3e3e3e;
+        }
+      }
+
+      .ng-arrow-wrapper {
+        .ng-arrow {
+          color: #3e3e3e;
+        }
+      }
+
+      &::after {
+        border: 1px solid #3e3e3e;
+      }
+    }
+  }
+}

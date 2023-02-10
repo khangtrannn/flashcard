@@ -1,10 +1,13 @@
 <div  class="min-h-[150px]">
   <ng-container *ngIf="!isLoading; else loadingCategories">
-    <ng-select #categorySelect class="category" [(ngModel)]="selectedCategory" placeholder="Flashcard category" [loadingText]="'Loading...'" notFoundText="No categories found. Please insert new one." addTagText="Add new category" [clearable]="false" [addTag]="handleAddNewCategory.bind(this)">
+    <ng-select *ngIf="!hideIfNoFlashcards || (hideIfNoFlashcards && flashcardCategories.length)"
+      #categorySelect class="category" [(ngModel)]="selectedCategory"
+      placeholder="Flashcard category" [loadingText]="'Loading...'" notFoundText="No categories found. Please insert new one."
+      addTagText="Add new category" [clearable]="false" [addTag]="handleAddNewCategory.bind(this)">
       <ng-option *ngFor="let category of flashcardCategories" [value]="category.name">{{ category.name }}</ng-option>
     </ng-select>
 
-    <div class="text-white flex gap-10 text-sm mt-2">
+    <div *ngIf="showList" class="text-white flex gap-10 text-sm mt-2">
       <span *ngFor="let category of flashcardCategories" (click)="onRemoveCategory(category.key!, category.name)" class="flex items-center gap-1 cursor-pointer">
         <i class="fa fa-times-circle" aria-hidden="true"></i> {{ category.name }}
       </span>
@@ -13,5 +16,5 @@
 </div>
 
 <ng-template #loadingCategories>
-  <span class="text-sm text-white block">Loading categories...</span>
+  <span *ngIf="showLoading" class="text-sm text-white block">Loading categories...</span>
 </ng-template>

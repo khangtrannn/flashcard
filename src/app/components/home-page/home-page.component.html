@@ -1,12 +1,9 @@
-<div class="flex flex-col wrapper">
+<div class="flex flex-col wrapper min-w-[510px]">
   <ng-container *ngIf="!isLoading; else loading">
     <div class="w-full text-blue-600">
-      <div class="absolute top-10">
-        <p>Flashcard shortcuts</p>
-        <div class="italic">
-          <p>f: flip</p>
-          <p>Space: next flashcard</p>
-        </div>
+      <div class="text-sm absolute top-10">
+        <ng-container *ngTemplateOutlet="shortcuts"></ng-container>
+        <app-category class="block mt-8" [hideIfNoFlashcards]="true" [showList]="false" [showLoading]="false"></app-category>
       </div>
     </div>
 
@@ -29,4 +26,12 @@
 
 <ng-template #noFlashcards>
   <span class="text-white">No flashcard to show</span>
+</ng-template>
+
+<ng-template #shortcuts>
+  <p>Flashcard shortcuts</p>
+  <div class="italic">
+    <p>f: flip</p>
+    <p>Space: next flashcard</p>
+  </div>
 </ng-template>
