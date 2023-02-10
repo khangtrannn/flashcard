@@ -4,8 +4,10 @@
       <ng-option *ngFor="let category of flashcardCategories" [value]="category.name">{{ category.name }}</ng-option>
     </ng-select>
 
-    <div class="text-white text-sm mt-2">
-      <span (click)="onRemoveCategory()" class="flex items-center gap-1 cursor-pointer"><i class="fa fa-times-circle" aria-hidden="true"></i> English</span>
+    <div class="text-white flex gap-10 text-sm mt-2">
+      <span *ngFor="let category of flashcardCategories" (click)="onRemoveCategory(category.key!, category.name)" class="flex items-center gap-1 cursor-pointer">
+        <i class="fa fa-times-circle" aria-hidden="true"></i> {{ category.name }}
+      </span>
     </div>
   </ng-container>
 </div>

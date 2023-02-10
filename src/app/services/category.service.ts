@@ -24,14 +24,18 @@ export class CategoryService {
   getAll(): Observable<Category[]> {
     if (!this.cache$) {
       this.cache$ = this.categoryRef.snapshotChanges().pipe(
-        map((changes) => changes.map(change => ({ key: change.payload.key, ...change.payload.val() }) as Category))
+        map((changes) => changes.map(change => ({ key: change.payload.key, ...change.payload.val() }) as Category).filter(category => !category.isHidden))
       );
     }
-    
+
     return this.cache$;
   }
 
   create(category: string) {
     return this.categoryRef.push({ name: category, isHidden: false });
+  }
+
+  hide(id: string): void {
+    this.categoryRef.update(id, { isHidden: true });
   }
 }

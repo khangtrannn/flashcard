@@ -16,8 +16,9 @@ import { EditorConfig } from '../../configs/EditorConfig';
 export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   readonly FRONT_TEMPLATE =
     '<div style="text-align: center;"><span style="background-color: rgb(219, 15, 15);"><font size="3">phrase</font></span></div><div style="text-align: center;"><span style="background-color: rgb(219, 15, 15); font-size: 0.875rem;"><br></span></div><div style="text-align: center;"><span style="text-align: center;">Vietnamese meaning</span><br></div>';
-  
-  readonly BACK_TEMPLATE = '<div style="text-align: center;"><font size="3">Example</font></div>';
+
+  readonly BACK_TEMPLATE =
+    '<div style="text-align: center;"><font size="3">Example</font></div>';
 
   editorConfig = EditorConfig;
   front = this.FRONT_TEMPLATE;
@@ -26,7 +27,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     public flashcardService: FlashcardService,
     private toastr: ToastrService,
-    private categoryService: CategoryService,
     private elementRef: ElementRef<HTMLDivElement>
   ) {}
 

@@ -1,24 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, take, takeUntil } from 'rxjs';
+import { filter, Subject, take, takeUntil } from 'rxjs';
 import { Category, CategoryService } from 'src/app/services/category.service';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>;
+  private destroy$ = new Subject<void>();
   isLoading = true;
 
   flashcardCategories: Category[] = [];
   selectedCategory: string | undefined;
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService) {}
 
   ngOnInit(): void {
-    this.categoryService.getAll()
-      .pipe(take(1), takeUntil(this.destroy$))
+    this.categoryService
+      .getAll()
+      .pipe(takeUntil(this.destroy$))
       .subscribe((categories) => {
         this.flashcardCategories = categories;
         this.selectedCategory = this.flashcardCategories[0]?.name;
@@ -27,12 +28,16 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   handleAddNewCategory(category: string): string {
-    this.categoryService.create(category).then((data) => console.log(data));
+    this.categoryService.create(category);
     return category;
   }
 
-  onRemoveCategory(): void {
+  onRemoveCategory(id: string, name: string): void {
+    const confirmed = window.confirm(`Do you want to delete category "${name}"?`);
 
+    if (confirmed) {
+      this.categoryService.hide(id);
+    }
   }
 
   ngOnDestroy(): void {

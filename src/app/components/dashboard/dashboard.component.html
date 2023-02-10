@@ -1,4 +1,12 @@
-<div class="mt-20 mx-auto grid grid-rows-1 w-fit content-center">
+
+
+<div class="mt-10 mx-auto grid grid-rows-1 w-fit content-center">
+  <a routerLink="/" class="flex gap-1 mb-10 items-center text-blue-600 dark:text-blue-500 hover:underline">
+    <div class="rotate-180">
+      <svg aria-hidden="true" class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+    </div>
+    <span>To homepage</span>
+  </a>
   <div class="flex h-fit gap-14">
     <div class="rounded-lg p-8 bg-white/[.05] shadow">
       <app-category></app-category>
@@ -6,7 +14,7 @@
       <angular-editor id="front" name="front" [config]="editorConfig"
         placeholder="Front" [(ngModel)]="front"></angular-editor>
 
-      <angular-editor id="back" class="block mt-4" name="back" [config]="editorConfig"
+      <angular-editor id="back" class="block mt-10" name="back" [config]="editorConfig"
         placeholder="Back" [(ngModel)]="back"></angular-editor>
 
       <button
@@ -20,8 +28,3 @@
     <app-flashcard [front]="front" [back]="back"></app-flashcard>
   </div>
 </div>
-
-<a routerLink="/" class="absolute flex gap-1 -translate-x-2/4 items-center bottom-16 left-1/2 text-blue-600 dark:text-blue-500 hover:underline">
-  <span>To homepage</span>
-  <svg aria-hidden="true" class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-</a>
