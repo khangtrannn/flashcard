@@ -38,8 +38,15 @@ export class CategoryComponent implements OnInit, OnDestroy {
       });
   }
 
-  handleAddNewCategory(category: string): string {
-    this.categoryService.create(category);
+  onCategoryChange(id: string): void {
+    this.categoryService.setSelectedCategory(id);
+  }
+
+  onAddNewCategory(category: string): string {
+    this.categoryService.create(category).then((data) => {
+      this.categoryService.setSelectedCategory(data.key!);
+    });
+
     return category;
   }
 
