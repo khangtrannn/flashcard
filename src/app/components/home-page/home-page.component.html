@@ -1,9 +1,18 @@
-<div class="wrapper">
+<div class="flex flex-col wrapper">
   <ng-container *ngIf="!isLoading; else loading">
+    <div class="w-full text-blue-600">
+      <div class="absolute top-10">
+        <p>Flashcard shortcuts</p>
+        <div class="italic">
+          <p>f: flip</p>
+          <p>Space: next flashcard</p>
+        </div>
+      </div>
+    </div>
+
     <ng-container *ngIf="flashcards.length; else noFlashcards">
       <div *ngFor="let i of [currentIndex]" [@swapAnimation]>
-        <app-flashcard *ngIf="flashcards[currentIndex] as flashcard" [front]="flashcard
-      .front" [back]="flashcard.back"></app-flashcard>
+        <app-flashcard *ngIf="flashcards[currentIndex] as flashcard" [front]="flashcard.front" [back]="flashcard.back"></app-flashcard>
       </div>
     </ng-container>
   </ng-container>
