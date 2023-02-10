@@ -19,7 +19,7 @@
 
       <button
         (click)="onAddFlashcard()"
-        [class.cursor-not-allowed]="!front"
+        [class.cursor-not-allowed]="!front || !(selectedCategory$ | async)"
         class="mt-4 text-sm w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white focus:outline-none">
         Add Flashcard
       </button>

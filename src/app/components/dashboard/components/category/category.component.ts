@@ -16,18 +16,17 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   isLoading = true;
   flashcardCategories: Category[] = [];
-  selectedCategory: string | undefined;
+  selectedCategory$ = this.categoryService.getSelectedCategory();
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(public categoryService: CategoryService) {}
 
   ngOnInit(): void {
     this.categoryService
       .getAll()
       .pipe(takeUntil(this.destroy$))
       .subscribe((categories) => {
-        this.flashcardCategories = categories;
-        this.selectedCategory = this.flashcardCategories[0]?.name;
         this.isLoading = false;
+        this.flashcardCategories = categories;
       });
   }
 
@@ -37,7 +36,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   onRemoveCategory(id: string, name: string): void {
-    const confirmed = window.confirm(`Do you want to delete category "${name}"?`);
+    const confirmed = window.confirm(
+      `Do you want to delete category "${name}"?`
+    );
 
     if (confirmed) {
       this.categoryService.hide(id);

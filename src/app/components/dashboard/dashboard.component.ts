@@ -1,10 +1,16 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { Subject, take, takeUntil } from 'rxjs';
-import { Category, CategoryService } from 'src/app/services/category.service';
+import { CategoryService } from 'src/app/services/category.service';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import {
   Flashcard,
-  FlashcardService
+  FlashcardService,
 } from 'src/app/services/flashcard.service';
 import { EditorConfig } from '../../configs/EditorConfig';
 
@@ -20,12 +26,17 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   readonly BACK_TEMPLATE =
     '<div style="text-align: center;"><font size="3">Example</font></div>';
 
+  private destroy$ = new Subject<void>();
+
   editorConfig = EditorConfig;
   front = this.FRONT_TEMPLATE;
   back = this.BACK_TEMPLATE;
 
+  selectedCategory$ = this.categoryService.getSelectedCategory();
+
   constructor(
     public flashcardService: FlashcardService,
+    private categoryService: CategoryService,
     private toastr: ToastrService,
     private elementRef: ElementRef<HTMLDivElement>
   ) {}
@@ -35,19 +46,23 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onAddFlashcard(): void {
-    if (!this.front) {
-      return;
-    }
+    this.selectedCategory$
+      .pipe(take(1), takeUntil(this.destroy$))
+      .subscribe((selectedCategory) => {
+        if (!this.front || !selectedCategory) {
+          return;
+        }
 
-    this.flashcardService
-      .create(this.getPayload())
-      .then((_) => {
-        this.resetState();
-        this.toastr.success('Add new flashcard successfully!');
-      })
-      .catch((err) => {
-        console.error(err);
-        this.toastr.error('Add new flashcard error!');
+        this.flashcardService
+          .create(this.getPayload())
+          .then((_) => {
+            this.resetState();
+            this.toastr.success('Add new flashcard successfully!');
+          })
+          .catch((err) => {
+            console.error(err);
+            this.toastr.error('Add new flashcard error!');
+          });
       });
   }
 
@@ -77,5 +92,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.flashcardService.enableShortcutListener();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
