@@ -77,6 +77,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
       const currentFlashcardIndex = this.currentIndex;
 
       if (confirmed) {
+        if (currentFlashcardIndex == this.flashcards.length - 1) {
+          this.currentIndex = 0;
+        }
+
         setTimeout(() => {
           this.flashcardService.delete(this.flashcards[currentFlashcardIndex].key!);
         });
