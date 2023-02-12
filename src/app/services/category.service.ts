@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { FIREBASE_GOOGLE_UID } from '../constants';
 
 export interface Category {
   key?: string;
@@ -23,7 +24,8 @@ export class CategoryService {
   );
 
   constructor(private db: AngularFireDatabase) {
-    this.categoryRef = db.list<Category>(this.dbPath);
+    const uid = window.localStorage.getItem(FIREBASE_GOOGLE_UID);
+    this.categoryRef = db.list<Category>(`${this.dbPath}/${uid}`);
   }
 
   getAll(): Observable<Category[]> {

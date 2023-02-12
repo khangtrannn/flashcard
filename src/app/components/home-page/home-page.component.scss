@@ -6,3 +6,30 @@
   align-items: center;
   min-height: 100vh;
 }
+
+.avatar-gradient {
+  --b: 3px;
+  width: 44px;
+  height: 44px;
+  color: #313149;
+  display: inline-block;
+  aspect-ratio: 1;
+  position: relative;
+}
+
+.avatar-gradient:before {
+  content: "";
+  inset: 0;
+  position: absolute;
+  background: var(--c, linear-gradient(to right, #9c20aa, #fb3570));
+  padding: var(--b);
+  border-radius: 50%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { map, Observable, Subject } from 'rxjs';
+import { FIREBASE_GOOGLE_UID } from 'src/app/constants';
 
 export interface Flashcard {
   key?: string;
@@ -21,24 +22,23 @@ export class FlashcardService {
   private cache$: Observable<Flashcard[]> | undefined;
 
   constructor(private db: AngularFireDatabase) {
-    this.flashcardsRef = db.list<Flashcard>(this.dbPath);
+    const uid = window.localStorage.getItem(FIREBASE_GOOGLE_UID);
+    this.flashcardsRef = db.list<Flashcard>(`${this.dbPath}/${uid}`);
   }
 
   getAll(): Observable<Flashcard[]> {
     if (!this.cache$) {
-      this.cache$ = this.flashcardsRef
-        .snapshotChanges()
-        .pipe(
-          map((changes) =>
-            changes.map(
-              (change) =>
-                ({
-                  key: change.payload.key,
-                  ...change.payload.val(),
-                } as Flashcard)
-            )
+      this.cache$ = this.flashcardsRef.snapshotChanges().pipe(
+        map((changes) =>
+          changes.map(
+            (change) =>
+              ({
+                key: change.payload.key,
+                ...change.payload.val(),
+              } as Flashcard)
           )
-        );
+        )
+      );
     }
 
     return this.cache$;

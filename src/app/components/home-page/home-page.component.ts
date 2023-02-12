@@ -1,9 +1,11 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ToastrService } from 'ngx-toastr';
 import { combineLatest, Subject, takeUntil } from 'rxjs';
 import { KEY } from 'src/app/constants';
 import { CategoryService } from 'src/app/services/category.service';
+import firebase from 'firebase/compat/app';
 import {
   Flashcard,
   FlashcardService,
@@ -47,9 +49,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
   currentIndex = 0;
   isLoading = CACHE.isInitialize;
 
+  user: firebase.User | null | undefined;
+
   constructor(
     private flashcardService: FlashcardService,
     private categoryService: CategoryService,
+    private fireAuth: AngularFireAuth,
     private toastr: ToastrService
   ) {}
 
@@ -69,6 +74,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.fireAuth.authState.subscribe((user) => (this.user = user));
+
     combineLatest([
       this.flashcardService.getAll(),
       this.categoryService.getSelectedCategory(),
