@@ -1,4 +1,4 @@
-import { FIREBASE_GOOGLE_UID } from './../../constants';
+import { FLASHCARD_INDEX, FIREBASE_GOOGLE_UID } from './../../constants';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -48,7 +48,7 @@ const CACHE: { isInitialize: boolean; flashcards: Flashcard[] } = {
 export class HomePageComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   flashcards: Flashcard[] = CACHE.flashcards;
-  currentIndex = 0;
+  _currentIndex = Number(window.localStorage.getItem(FLASHCARD_INDEX));
   isLoading = CACHE.isInitialize;
 
   user: firebase.User | null | undefined;
@@ -60,6 +60,15 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private router: Router,
   ) {}
+
+  get currentIndex(): number {
+    return this._currentIndex;
+  }
+
+  set currentIndex(index: number) {
+    window.localStorage.setItem(FLASHCARD_INDEX, index.toString());
+    this._currentIndex = index;
+  }
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -135,6 +144,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     if (confirmed) {
       this.fireAuth.signOut();
       window.localStorage.removeItem(FIREBASE_GOOGLE_UID);
+      window.localStorage.removeItem(FLASHCARD_INDEX);
       this.router.navigateByUrl('/login');
     }
   }

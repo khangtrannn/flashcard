@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { FIREBASE_GOOGLE_UID } from './constants';
+import { FIREBASE_GOOGLE_UID, FLASHCARD_INDEX } from './constants';
 
 @Component({
   selector: 'app-root',

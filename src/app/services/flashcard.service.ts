@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { map, Observable, Subject } from 'rxjs';
-import { FIREBASE_GOOGLE_UID } from 'src/app/constants';
+import { FIREBASE_GOOGLE_UID } from './../constants';
 
 export interface Flashcard {
   key?: string;

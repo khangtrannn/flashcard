@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GoogleAuthProvider } from '@angular/fire/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { FIREBASE_GOOGLE_UID } from 'src/app/constants';
+import { FIREBASE_GOOGLE_UID } from './../../constants';
 
 @Component({
   selector: 'app-login',

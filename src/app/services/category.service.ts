@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { FIREBASE_GOOGLE_UID } from '../constants';
+import { FIREBASE_GOOGLE_UID } from './../constants';
 
 export interface Category {
   key?: string;
