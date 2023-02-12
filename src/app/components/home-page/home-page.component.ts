@@ -60,16 +60,28 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (event.key === KEY.space) {
+    if (event.key !== KEY.f) {
       event.stopImmediatePropagation();
+    }
 
+    if (event.key === KEY.space) {
       if (this.flashcards.length === 1) {
         this.toastr.warning('There is only 1 flashcard of this category!');
       }
 
-      this.currentIndex = this.flashcards[this.currentIndex + 1]
-        ? this.currentIndex + 1
-        : 0;
+      this.updateNextFlashcardIndex();
+    }
+
+    if (event.key === KEY.d) {
+      const confirmed = confirm('Do you want to delete current flashcard?');
+      const currentFlashcardIndex = this.currentIndex;
+
+      if (confirmed) {
+        setTimeout(() => {
+          this.flashcardService.delete(this.flashcards[currentFlashcardIndex].key!);
+        });
+      }
+
     }
   }
 
@@ -89,6 +101,14 @@ export class HomePageComponent implements OnInit, OnDestroy {
         CACHE.isInitialize = false;
         CACHE.flashcards = flashcards;
       });
+  }
+
+  private updateNextFlashcardIndex(): void {
+    console.log('how many times');
+
+    this.currentIndex = this.flashcards[this.currentIndex + 1]
+      ? this.currentIndex + 1
+      : 0;
   }
 
   ngOnDestroy(): void {

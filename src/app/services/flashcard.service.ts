@@ -48,6 +48,10 @@ export class FlashcardService {
     return this.flashcardsRef.push(flashcard);
   }
 
+  delete(id: string): void {
+    this.flashcardsRef.remove(id);
+  }
+
   flip(face: string): void {
     this.flip$.next(face);
   }
