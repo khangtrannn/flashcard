@@ -1,3 +1,4 @@
+import { FIREBASE_GOOGLE_UID } from './../../constants';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -10,6 +11,7 @@ import {
   Flashcard,
   FlashcardService,
 } from 'src/app/services/flashcard.service';
+import { Router } from '@angular/router';
 
 const CACHE: { isInitialize: boolean; flashcards: Flashcard[] } = {
   isInitialize: true,
@@ -55,7 +57,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private flashcardService: FlashcardService,
     private categoryService: CategoryService,
     private fireAuth: AngularFireAuth,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
   ) {}
 
   @HostListener('window:keyup', ['$event'])
@@ -64,28 +67,18 @@ export class HomePageComponent implements OnInit, OnDestroy {
       event.stopImmediatePropagation();
     }
 
-    if (event.key === KEY.space) {
-      if (this.flashcards.length === 1) {
-        this.toastr.warning('There is only 1 flashcard of this category!');
-      }
-
-      this.updateNextFlashcardIndex();
-    }
-
-    if (event.key === KEY.d) {
-      const confirmed = confirm('Do you want to delete current flashcard?');
-      const currentFlashcardIndex = this.currentIndex;
-
-      if (confirmed) {
-        if (currentFlashcardIndex == this.flashcards.length - 1) {
-          this.currentIndex = 0;
-        }
-
-        setTimeout(() => {
-          this.flashcardService.delete(this.flashcards[currentFlashcardIndex].key!);
-        });
-      }
-
+    switch (event.key) {
+      case KEY.space:
+        this.handleNextFlashcard();
+        break;
+      case KEY.d:
+        this.handleDeleteFlashcard();
+        break;
+      case KEY.l:
+        this.handleLogout();
+        break;
+      default:
+        return;
     }
   }
 
@@ -107,9 +100,39 @@ export class HomePageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private updateNextFlashcardIndex(): void {
-    console.log('how many times');
+  private handleDeleteFlashcard(): void {
+    const confirmed = confirm('Do you want to delete current flashcard?');
+    const currentFlashcardIndex = this.currentIndex;
 
+    if (confirmed) {
+      if (currentFlashcardIndex == this.flashcards.length - 1) {
+        this.currentIndex = 0;
+      }
+
+      setTimeout(() => {
+        this.flashcardService.delete(this.flashcards[currentFlashcardIndex].key!);
+      });
+    }
+  }
+
+  private handleNextFlashcard(): void {
+    if (this.flashcards.length === 1) {
+      this.toastr.warning('There is only 1 flashcard of this category!');
+    }
+
+    this.updateNextFlashcardIndex();
+  }
+
+  private handleLogout(): void {
+    const confirmed = confirm('Do you want to logout?');
+    if (confirmed) {
+      this.fireAuth.signOut();
+      window.localStorage.removeItem(FIREBASE_GOOGLE_UID);
+      this.router.navigateByUrl('/login');
+    }
+  }
+
+  private updateNextFlashcardIndex(): void {
     this.currentIndex = this.flashcards[this.currentIndex + 1]
       ? this.currentIndex + 1
       : 0;
