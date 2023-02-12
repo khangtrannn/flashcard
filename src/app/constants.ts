@@ -3,7 +3,8 @@ export const KEY = {
   space: ' ',
   d: 'd',
   l: 'l',
-  b: 'b'
+  b: 'b',
+  e: 'e',
 };
 
 export const FIREBASE_GOOGLE_UID = 'FIREBASE_GOOGLE_UID';

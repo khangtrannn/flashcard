@@ -12,19 +12,19 @@
       <app-category></app-category>
 
       <angular-editor id="front" name="front" [config]="editorConfig"
-        placeholder="Front" [(ngModel)]="front"></angular-editor>
+        placeholder="Front" [(ngModel)]="flashcard.front"></angular-editor>
 
       <angular-editor id="back" class="block mt-10" name="back" [config]="editorConfig"
-        placeholder="Back" [(ngModel)]="back"></angular-editor>
+        placeholder="Back" [(ngModel)]="flashcard.back"></angular-editor>
 
       <button
-        (click)="onAddFlashcard()"
-        [class.cursor-not-allowed]="!front || !(selectedCategory$ | async)"
+        (click)="onSubmitFlashcard()"
+        [class.cursor-not-allowed]="!flashcard.front || !(selectedCategory$ | async)"
         class="mt-4 text-sm w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white focus:outline-none">
-        Add Flashcard
+        {{ flashcard.key ? 'Update Flashcard' : 'Add Flashcard' }}
       </button>
     </div>
 
-    <app-flashcard [front]="front" [back]="back"></app-flashcard>
+    <app-flashcard [front]="flashcard.front" [back]="flashcard.back"></app-flashcard>
   </div>
 </div>

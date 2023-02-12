@@ -13,6 +13,7 @@ import {
   FlashcardService,
 } from 'src/app/services/flashcard.service';
 import { EditorConfig } from '../../configs/EditorConfig';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,8 +30,11 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   private destroy$ = new Subject<void>();
 
   editorConfig = EditorConfig;
-  front = this.FRONT_TEMPLATE;
-  back = this.BACK_TEMPLATE;
+
+  flashcard: Flashcard = {
+    front: '',
+    back: '',
+  }
 
   selectedCategory$ = this.categoryService.getSelectedCategory();
 
@@ -38,35 +42,65 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     public flashcardService: FlashcardService,
     private categoryService: CategoryService,
     private toastr: ToastrService,
-    private elementRef: ElementRef<HTMLDivElement>
+    private elementRef: ElementRef<HTMLDivElement>,
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
     this.flashcardService.disableShortcutListener();
+    const flashcardID = this.activatedRoute.snapshot.queryParamMap.get('flashcardId');
+
+    if (flashcardID) {
+      this.flashcardService.getAll().pipe(takeUntil(this.destroy$)).subscribe((flashcards) => {
+        const findFlashcard = flashcards.find((flashcard) => flashcard.key === flashcardID);
+
+        if (findFlashcard) {
+          this.flashcard = findFlashcard;
+        }
+      });
+    } else {
+      this.flashcard.front = this.FRONT_TEMPLATE;
+      this.flashcard.back = this.BACK_TEMPLATE;
+    }
   }
 
-  onAddFlashcard(): void {
+  onSubmitFlashcard(): void {
     this.selectedCategory$
       .pipe(take(1), takeUntil(this.destroy$))
       .subscribe((selectedCategory) => {
-        if (!this.front || !selectedCategory) {
+        this.flashcard.category = selectedCategory!;
+
+        if (!this.flashcard.front || !selectedCategory) {
           return;
         }
 
-        this.flashcardService
-          .create({
-            front: this.front,
-            back: this.back,
-            category: selectedCategory,
-          })
-          .then((_) => {
-            this.resetState();
-            this.toastr.success('Add new flashcard successfully!');
-          })
-          .catch((err) => {
-            console.error(err);
-            this.toastr.error('Add new flashcard error!');
-          });
+        if (!this.flashcard.key) {
+          this.handleAddFlashcard();
+        } else {
+          this.handleUpdateFlashcard();
+        }
+      });
+  }
+
+  private handleUpdateFlashcard(): void {
+    this.flashcardService.update(this.flashcard).then((_) => {
+      this.toastr.success('Update flashcard successfully!');
+    }).catch((err) => {
+      console.error(err);
+      this.toastr.error('Update flashcard failed!');
+    });
+  }
+
+  private handleAddFlashcard(): void {
+    this.flashcardService
+      .create(this.flashcard)
+      .then((_) => {
+        this.resetState();
+        this.toastr.success('Add new flashcard successfully!');
+      })
+      .catch((err) => {
+        console.error(err);
+        this.toastr.error('Add new flashcard error!');
       });
   }
 
@@ -83,8 +117,8 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private resetState(): void {
-    this.front = this.FRONT_TEMPLATE;
-    this.back = this.BACK_TEMPLATE;
+    this.flashcard.front = this.FRONT_TEMPLATE;
+    this.flashcard.back = this.BACK_TEMPLATE;
   }
 
   ngOnDestroy(): void {

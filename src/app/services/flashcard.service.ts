@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
-import { map, Observable, Subject } from 'rxjs';
+import { filter, first, map, Observable, Subject } from 'rxjs';
 import { FIREBASE_GOOGLE_UID } from './../constants';
 
 export interface Flashcard {
   key?: string;
   front: string;
   back: string;
-  category: string;
+  category?: string;
 }
 
 @Injectable({
@@ -50,6 +50,10 @@ export class FlashcardService {
 
   delete(id: string): void {
     this.flashcardsRef.remove(id);
+  }
+
+  update(flashcard: Flashcard) {
+    return this.flashcardsRef.update(flashcard.key!, flashcard);
   }
 
   flip(face: string): void {

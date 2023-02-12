@@ -89,6 +89,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
       case KEY.b:
         this.handleBackToPreviousFlashcard();
         break;
+      case KEY.e:
+        this.handleEditFlashcard();
+        break;
       default:
         return;
     }
@@ -137,6 +140,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   private handleBackToPreviousFlashcard(): void {
     this.updatePreviousFlashcardIndex();
+  }
+
+  private handleEditFlashcard(): void {
+    this.router.navigate(['/dashboard'], { queryParams: { flashcardId: this.flashcards[this.currentIndex].key } })
   }
 
   private handleLogout(): void {
