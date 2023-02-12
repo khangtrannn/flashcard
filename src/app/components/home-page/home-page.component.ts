@@ -77,6 +77,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
       case KEY.l:
         this.handleLogout();
         break;
+      case KEY.b:
+        this.handleBackToPreviousFlashcard();
+        break;
       default:
         return;
     }
@@ -123,6 +126,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.updateNextFlashcardIndex();
   }
 
+  private handleBackToPreviousFlashcard(): void {
+    this.updatePreviousFlashcardIndex();
+  }
+
   private handleLogout(): void {
     const confirmed = confirm('Do you want to logout?');
     if (confirmed) {
@@ -136,6 +143,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.currentIndex = this.flashcards[this.currentIndex + 1]
       ? this.currentIndex + 1
       : 0;
+  }
+
+  private updatePreviousFlashcardIndex(): void {
+    this.currentIndex = this.flashcards[this.currentIndex - 1]
+      ? this.currentIndex - 1
+      : this.flashcards.length - 1;
   }
 
   ngOnDestroy(): void {
