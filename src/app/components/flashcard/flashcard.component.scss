@@ -2,8 +2,8 @@
   position: relative;
   width: 510px;
   height: 310px;
-  transform-style: preserve-3d;
-  perspective: 500px;
+  // transform-style: preserve-3d;
+  // perspective: 500px;
 
   &.flipped {
     .face {
@@ -28,7 +28,7 @@
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     transform-style: preserve-3d;
-    transition: 700ms;
+    // transition: 700ms;
     backface-visibility: hidden;
     padding: 0 20px;
 

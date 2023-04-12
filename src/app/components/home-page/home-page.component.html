@@ -7,14 +7,14 @@
     </div>
 
     <ng-container *ngIf="flashcards.length; else noFlashcards">
-      <div *ngFor="let i of [currentIndex]" [@swapAnimation]>
+      <div *ngFor="let i of [currentIndex]">
         <app-flashcard *ngIf="flashcards[currentIndex] as flashcard" [front]="flashcard.front" [back]="flashcard.back"></app-flashcard>
       </div>
     </ng-container>
   </ng-container>
 
   <div class="absolute min-h-[44px] flex flex-col gap-6 -translate-x-2/4 left-1/2 text-blue-600 bottom-10">
-    <app-category [hideIfNoFlashcards]="true" [showList]="false" [showLoading]="false"></app-category>
+    <app-category (categoryChange)="currentIndex = 0" [hideIfNoFlashcards]="true" [showList]="false" [showLoading]="false"></app-category>
 
     <div class="flex gap-4">
       <div class="relative w-11 h-11">

@@ -36,7 +36,7 @@ export class FlashcardService {
                 key: change.payload.key,
                 ...change.payload.val(),
               } as Flashcard)
-          )
+          ).sort(() => Math.random() - 0.5)
         )
       );
     }

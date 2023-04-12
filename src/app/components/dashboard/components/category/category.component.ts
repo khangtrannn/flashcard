@@ -1,5 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { combineLatest, Subject, takeUntil } from 'rxjs';
+import { FLASHCARD_INDEX } from 'src/app/constants';
 import { Category, CategoryService } from 'src/app/services/category.service';
 
 @Component({
@@ -13,6 +14,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
   @Input() showList = true;
   @Input() hideIfNoFlashcards = false;
   @Input() showLoading = true;
+
+  @Output() categoryChange = new EventEmitter<void>();
 
   isLoading = true;
   flashcardCategories: Category[] = [];
@@ -39,6 +42,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(id: string): void {
+    window.localStorage.setItem(FLASHCARD_INDEX, "0");
+    this.categoryChange.next();
     this.categoryService.setSelectedCategory(id);
   }
 
