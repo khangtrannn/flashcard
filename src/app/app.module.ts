@@ -9,15 +9,16 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CategoryComponent } from './components/dashboard/components/category/category.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FlashcardComponent } from './components/flashcard/flashcard.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
-import { CategoryComponent } from './components/dashboard/components/category/category.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { CategoryComponent } from './components/dashboard/components/category/ca
     HttpClientModule,
     NgSelectModule,
     AngularEditorModule,
+    NgbModule,
     ToastrModule.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase()),
