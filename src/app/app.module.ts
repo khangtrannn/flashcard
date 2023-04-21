@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import {
   BrowserModule,
   HAMMER_GESTURE_CONFIG,
@@ -24,6 +25,7 @@ import { CategoryComponent } from './components/dashboard/components/category/ca
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FlashcardComponent } from './components/flashcard-collection/components/flashcard/flashcard.component';
 import { FlashcardCollectionComponent } from './components/flashcard-collection/flashcard-collection.component';
+import { HamburgerIconComponent } from './components/hamburger-icon/hamburger-icon.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
@@ -47,6 +49,7 @@ class MyHammerConfig extends HammerGestureConfig {
     SafeHtmlPipe,
     CategoryComponent,
     FlashcardCollectionComponent,
+    HamburgerIconComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ class MyHammerConfig extends HammerGestureConfig {
     AngularEditorModule,
     NgbModule,
     HammerModule,
+    MatSidenavModule,
     ToastrModule.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase()),

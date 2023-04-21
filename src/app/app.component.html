@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over" position="end" fixedInViewport="true">
+    Menu working
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="fixed right-4 top-4 z-10">
+      <app-hamburger-icon (toggled)="sidenav.open()"></app-hamburger-icon>
+    </div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
