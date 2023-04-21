@@ -6,10 +6,12 @@
 
     .carousel-item {
       height: 100vh;
+      width: 100vw;
 
       &.active {
         display: flex;
         align-items: center;
+        justify-content: center;
       }
     }
   }
