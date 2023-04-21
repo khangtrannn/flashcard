@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CategoryComponent } from './components/dashboard/components/category/category.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { FlashcardCollectionComponent } from './components/flashcard-collection/flashcard-collection.component';
 import { FlashcardComponent } from './components/flashcard/flashcard.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
@@ -28,6 +29,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     DashboardComponent,
     SafeHtmlPipe,
     CategoryComponent,
+    FlashcardCollectionComponent,
   ],
   imports: [
     BrowserModule,
