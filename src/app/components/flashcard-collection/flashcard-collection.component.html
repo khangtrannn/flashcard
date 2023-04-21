@@ -1,16 +1,18 @@
-<ng-container *ngIf="flashcards; else loading">
-  <ng-container *ngIf="flashcards.length; else noFlashcards">
-    <ngb-carousel #carousel
-      [showNavigationArrows]="false"
-      [showNavigationIndicators]="false"
-      [interval]="0"
-    >
-      <ng-template ngbSlide *ngFor="let flashcard of flashcards">
-        <app-flashcard [front]="flashcard.front" [back]="flashcard.back"></app-flashcard>
-      </ng-template>
-    </ngb-carousel>
+<div class="flex itmes-center justify-center">
+  <ng-container *ngIf="flashcards; else loading">
+    <ng-container *ngIf="flashcards.length; else noFlashcards">
+      <ngb-carousel #carousel
+        [showNavigationArrows]="false"
+        [showNavigationIndicators]="false"
+        [interval]="0"
+      >
+        <ng-template ngbSlide *ngFor="let flashcard of flashcards">
+          <app-flashcard [front]="flashcard.front" [back]="flashcard.back"></app-flashcard>
+        </ng-template>
+      </ngb-carousel>
+    </ng-container>
   </ng-container>
-</ng-container>
+</div>
 
 <ng-template #loading>
   <span class="text-white">Loading...</span>
