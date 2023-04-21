@@ -1,8 +1,14 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  HAMMER_GESTURE_CONFIG,
+  HammerGestureConfig,
+  HammerModule,
+} from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgSelectModule } from '@ng-select/ng-select';
+import * as Hammer from 'hammerjs';
 
 import { HttpClientModule } from '@angular/common/http';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -16,10 +22,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CategoryComponent } from './components/dashboard/components/category/category.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { FlashcardCollectionComponent } from './components/flashcard-collection/flashcard-collection.component';
 import { FlashcardComponent } from './components/flashcard-collection/components/flashcard/flashcard.component';
+import { FlashcardCollectionComponent } from './components/flashcard-collection/flashcard-collection.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+
+class MyHammerConfig extends HammerGestureConfig {
+  override overrides = {
+    swipe: {
+      direction: Hammer.DIRECTION_HORIZONTAL,
+      threshold: 1,
+      velocity: 0.1,
+    },
+    pan: { direction: Hammer.DIRECTION_HORIZONTAL },
+  };
+}
 
 @NgModule({
   declarations: [
@@ -40,11 +57,18 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     NgSelectModule,
     AngularEditorModule,
     NgbModule,
+    HammerModule,
     ToastrModule.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase()),
   ],
-  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
+  providers: [
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useClass: MyHammerConfig,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
