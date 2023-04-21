@@ -18,7 +18,7 @@ export class FlashcardComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   shouldFlip = false;
 
-  @Input() front: string | undefined;
+  @Input() front!: string;
   @Input() back: string | undefined;
 
   constructor(private flashcardService: FlashcardService) {}

@@ -1,34 +1,17 @@
-<div class="relative flex flex-col wrapper min-w-[510px]">
+<div class="relative flex flex-col wrapper">
   <ng-container *ngIf="!isLoading; else loading">
-    <div class="w-full text-blue-600">
-      <div class=" grid grid-cols-2 text-sm absolute top-10">
-        <ng-container *ngTemplateOutlet="shortcuts"></ng-container>
-      </div>
-    </div>
-
     <ng-container *ngIf="flashcards.length; else noFlashcards">
-      <div *ngFor="let i of [currentIndex]">
-        <app-flashcard *ngIf="flashcards[currentIndex] as flashcard" [front]="flashcard.front" [back]="flashcard.back"></app-flashcard>
-      </div>
+      <ngb-carousel #carousel
+        [showNavigationArrows]="false"
+        [showNavigationIndicators]="false"
+        [interval]="0"
+      >
+        <ng-template ngbSlide *ngFor="let flashcard of flashcards">
+          <app-flashcard [front]="flashcard.front" [back]="flashcard.back"></app-flashcard>
+        </ng-template>
+      </ngb-carousel>
     </ng-container>
   </ng-container>
-
-  <div class="absolute min-h-[44px] flex flex-col gap-6 -translate-x-2/4 left-1/2 text-blue-600 bottom-10">
-    <app-category (categoryChange)="currentIndex = 0" [hideIfNoFlashcards]="true" [showList]="false" [showLoading]="false"></app-category>
-
-    <div class="flex gap-4">
-      <div class="relative w-11 h-11">
-        <div *ngIf="user" class="absolute avatar-gradient" style="--c: linear-gradient(225deg, #2196f3 0%, #b3077f 100%)">
-          <img class="w-11 h-11 rounded-[50%] mr-3" referrerpolicy="no-referrer" [src]="user.photoURL" [alt]="user.displayName" />
-        </div>
-      </div>
-
-      <a routerLink="/dashboard" class="hover:underline flex gap-1 items-center">
-        <span>To dashboard</span>
-        <svg aria-hidden="true" class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-      </a>
-    </div>
-  </div>
 </div>
 
 <ng-template #loading>
@@ -37,18 +20,4 @@
 
 <ng-template #noFlashcards>
   <span class="text-white">No flashcard to show</span>
-</ng-template>
-
-<ng-template #shortcuts>
-  <div>
-    <p>Flashcard shortcuts</p>
-    <div class="italic">
-      <p>f: flip</p>
-      <p>space: next flashcard</p>
-      <p>b: back to previous flashcard</p>
-      <p>d: delete flashcard</p>
-      <p>e: edit flashcard</p>
-      <p>l: logout</p>
-    </div>
-  </div>
 </ng-template>
