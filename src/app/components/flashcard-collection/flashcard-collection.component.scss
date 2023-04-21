@@ -3,5 +3,14 @@
     &:focus {
       outline: none;
     }
+
+    .carousel-item {
+      height: 100vh;
+
+      &.active {
+        display: flex;
+        align-items: center;
+      }
+    }
   }
 }
