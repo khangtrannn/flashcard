@@ -8,8 +8,6 @@ import { FIREBASE_GOOGLE_UID } from './constants';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'flashcard';
-
   constructor(private router: Router) {}
 
   ngOnInit(): void {

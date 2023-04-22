@@ -4,7 +4,7 @@
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="over" position="end" fixedInViewport="true">
-    <app-menu></app-menu>
+    <app-menu [matSidenav]="sidenav"></app-menu>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>

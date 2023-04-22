@@ -4,8 +4,12 @@ import { MatSidenav } from '@angular/material/sidenav';
 @Component({
   selector: 'app-hamburger-icon',
   template: `
-    <input type="checkbox" class="nav-toggle" id="nav-toggle" />
-    <label class="nav-icon" for="nav-toggle" (click)="onToggleMenu()">
+    <label
+      [class.open]="matSidenav.opened"
+      class="nav-icon"
+      for="nav-toggle"
+      (click)="onToggleMenu()"
+    >
       <span
         *ngFor="let i of [1, 2, 3]"
         class="nav-icon-bar"
@@ -50,16 +54,16 @@ import { MatSidenav } from '@angular/material/sidenav';
         bottom: 5px;
       }
 
-      .nav-toggle:checked ~ .nav-icon > .nav-icon-bar:first-child {
+      .nav-icon.open > .nav-icon-bar:first-child {
         transform: rotate(45deg);
         top: 14px;
       }
 
-      .nav-toggle:checked ~ .nav-icon > .nav-icon-bar:nth-child(2) {
+      .nav-icon.open > .nav-icon-bar:nth-child(2) {
         background-color: transparent !important;
       }
 
-      .nav-toggle:checked ~ .nav-icon > .nav-icon-bar:last-child {
+      .nav-icon.open > .nav-icon-bar:last-child {
         transform: rotate(-45deg);
         bottom: 14px;
       }
@@ -74,15 +78,11 @@ export class HamburgerIconComponent {
   @Input() color: string = 'white';
   @Input() matSidenav!: MatSidenav;
 
-  private isMenuOpen = false;
-
   onToggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
-
-    if (this.isMenuOpen) {
-      this.matSidenav.open();
-    } else {
+    if (this.matSidenav.opened) {
       this.matSidenav.close();
+    } else {
+      this.matSidenav.open();
     }
   }
 }
