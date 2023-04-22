@@ -25,8 +25,9 @@ import { CategoryComponent } from './components/dashboard/components/category/ca
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FlashcardComponent } from './components/flashcard-collection/components/flashcard/flashcard.component';
 import { FlashcardCollectionComponent } from './components/flashcard-collection/flashcard-collection.component';
-import { HamburgerIconComponent } from './components/hamburger-icon/hamburger-icon.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { HamburgerIconComponent } from './components/menu/components/hamburger-icon/hamburger-icon.component';
+import { MenuComponent } from './components/menu/menu.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 class MyHammerConfig extends HammerGestureConfig {
@@ -50,6 +51,7 @@ class MyHammerConfig extends HammerGestureConfig {
     CategoryComponent,
     FlashcardCollectionComponent,
     HamburgerIconComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
