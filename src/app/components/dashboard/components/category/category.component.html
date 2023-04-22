@@ -1,5 +1,5 @@
 <div class="category-wrapper min-h-[150px] min-w-[200px]">
-  <ng-container *ngIf="!isLoading; else loadingCategories">
+  <ng-container *ngIf="flashcardCategories; else loadingCategories">
     <ng-select *ngIf="flashcardCategories.length"
       #category
       class="category" [ngModel]="selectedCategory"

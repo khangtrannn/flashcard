@@ -16,7 +16,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   @Output() categoryChange = new EventEmitter<void>();
 
-  isLoading = true;
   flashcardCategories: Category[] = [];
   selectedCategory: string | undefined;
 
@@ -29,7 +28,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
     ])
       .pipe(takeUntil(this.destroy$))
       .subscribe(([categories, selectedCategory]) => {
-        this.isLoading = false;
         this.flashcardCategories = categories;
 
         if (selectedCategory) {
@@ -41,9 +39,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(id: string): void {
-    window.localStorage.setItem(FLASHCARD_INDEX, '0');
-    this.categoryChange.next();
+    window.localStorage.setItem(FLASHCARD_INDEX, id);
     this.categoryService.setSelectedCategory(id);
+    this.categoryChange.next();
   }
 
   onAddNewCategory(category: string): string {
