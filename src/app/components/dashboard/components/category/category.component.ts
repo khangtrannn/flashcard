@@ -9,8 +9,6 @@ import { Category, CategoryService } from 'src/app/services/category.service';
 })
 export class CategoryComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-
-  @Input() showList = true;
   @Input() showLoading = true;
 
   flashcardCategories: Category[] = [];

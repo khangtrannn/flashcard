@@ -1,4 +1,4 @@
-<div class="category-wrapper min-w-[200px]">
+<div class="category-wrapper min-h-[70px] min-w-[200px]">
   <ng-container *ngIf="flashcardCategories; else loadingCategories">
     <ng-select *ngIf="flashcardCategories.length"
       #category
@@ -8,12 +8,6 @@
       addTagText="Add new category" [clearable]="false" [addTag]="onAddNewCategory.bind(this)">
       <ng-option *ngFor="let category of flashcardCategories" [value]="category.key">{{ category.name }}</ng-option>
     </ng-select>
-
-    <div *ngIf="showList" class="text-white flex gap-10 text-sm mt-2">
-      <span *ngFor="let category of flashcardCategories" (click)="onRemoveCategory(category.key!, category.name)" class="flex items-center gap-1 cursor-pointer">
-        <i class="fa fa-times-circle" aria-hidden="true"></i> {{ category.name }}
-      </span>
-    </div>
   </ng-container>
 </div>
 
