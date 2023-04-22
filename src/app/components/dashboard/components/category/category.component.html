@@ -1,6 +1,6 @@
-<div class="category-wrapper min-h-[150px]">
+<div class="category-wrapper min-h-[150px] min-w-[200px]">
   <ng-container *ngIf="!isLoading; else loadingCategories">
-    <ng-select *ngIf="!hideIfNoFlashcards || (hideIfNoFlashcards && flashcardCategories.length)"
+    <ng-select *ngIf="flashcardCategories.length"
       #category
       class="category" [ngModel]="selectedCategory"
       (change)="onCategoryChange($event); category.blur()"

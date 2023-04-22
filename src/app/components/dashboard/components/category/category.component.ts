@@ -12,7 +12,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   @Input() showList = true;
-  @Input() hideIfNoFlashcards = false;
   @Input() showLoading = true;
 
   @Output() categoryChange = new EventEmitter<void>();
@@ -42,7 +41,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   onCategoryChange(id: string): void {
-    window.localStorage.setItem(FLASHCARD_INDEX, "0");
+    window.localStorage.setItem(FLASHCARD_INDEX, '0');
     this.categoryChange.next();
     this.categoryService.setSelectedCategory(id);
   }
