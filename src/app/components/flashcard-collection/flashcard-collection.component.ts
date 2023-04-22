@@ -18,7 +18,7 @@ export class FlashcardCollectionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.flashcardService
-      .getAll()
+      .getAllBySelectedCategory()
       .pipe(takeUntil(this.destroy$))
       .subscribe((flashcards) => {
         this.flashcards = flashcards;

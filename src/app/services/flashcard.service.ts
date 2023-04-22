@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
-import { filter, first, map, Observable, Subject } from 'rxjs';
+import { Observable, Subject, map, switchMap } from 'rxjs';
 import { FIREBASE_GOOGLE_UID } from './../constants';
+import { CategoryService } from './category.service';
 
 export interface Flashcard {
   key?: string;
@@ -15,13 +16,15 @@ export interface Flashcard {
 })
 export class FlashcardService {
   private dbPath = '/flashcards';
-  private _shouldListenShortcut = true;
   private flip$ = new Subject<string>();
   private flashcardsRef: AngularFireList<Flashcard>;
 
   private cache$: Observable<Flashcard[]> | undefined;
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(
+    private db: AngularFireDatabase,
+    private categoryService: CategoryService
+  ) {
     const uid = window.localStorage.getItem(FIREBASE_GOOGLE_UID);
     this.flashcardsRef = db.list<Flashcard>(`${this.dbPath}/${uid}`);
   }
@@ -30,18 +33,38 @@ export class FlashcardService {
     if (!this.cache$) {
       this.cache$ = this.flashcardsRef.snapshotChanges().pipe(
         map((changes) =>
-          changes.map(
-            (change) =>
-              ({
-                key: change.payload.key,
-                ...change.payload.val(),
-              } as Flashcard)
-          ).sort(() => Math.random() - 0.5)
+          changes
+            .map(
+              (change) =>
+                ({
+                  key: change.payload.key,
+                  ...change.payload.val(),
+                } as Flashcard)
+            )
+            .sort(() => Math.random() - 0.5)
         )
       );
     }
 
     return this.cache$;
+  }
+
+  getAllBySelectedCategory(): Observable<Flashcard[]> {
+    return this.categoryService.getSelectedCategory().pipe(
+      switchMap((selectedCategory) => {
+        if (selectedCategory) {
+          return this.getAll().pipe(
+            map((flashcards) =>
+              flashcards.filter(
+                (flashcard) => flashcard.category === selectedCategory
+              )
+            )
+          );
+        }
+
+        return this.getAll();
+      })
+    );
   }
 
   create(flashcard: Flashcard) {
@@ -62,17 +85,5 @@ export class FlashcardService {
 
   onFlip(): Observable<string> {
     return this.flip$.asObservable();
-  }
-
-  disableShortcutListener(): void {
-    this._shouldListenShortcut = false;
-  }
-
-  enableShortcutListener(): void {
-    this._shouldListenShortcut = true;
-  }
-
-  get shouldListenShortcut(): boolean {
-    return this._shouldListenShortcut;
   }
 }

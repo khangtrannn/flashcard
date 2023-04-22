@@ -34,10 +34,6 @@ export class FlashcardComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    if (!this.flashcardService.shouldListenShortcut) {
-      return;
-    }
-
     if (event.key === KEY.f) {
       this.toggleFlipFlashcard();
     }

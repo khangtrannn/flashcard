@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   flashcard: Flashcard = {
     front: '',
     back: '',
-  }
+  };
 
   selectedCategory$ = this.categoryService.getSelectedCategory();
 
@@ -43,21 +43,26 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     private categoryService: CategoryService,
     private toastr: ToastrService,
     private elementRef: ElementRef<HTMLDivElement>,
-    private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.flashcardService.disableShortcutListener();
-    const flashcardID = this.activatedRoute.snapshot.queryParamMap.get('flashcardId');
+    const flashcardID =
+      this.activatedRoute.snapshot.queryParamMap.get('flashcardId');
 
     if (flashcardID) {
-      this.flashcardService.getAll().pipe(takeUntil(this.destroy$)).subscribe((flashcards) => {
-        const findFlashcard = flashcards.find((flashcard) => flashcard.key === flashcardID);
+      this.flashcardService
+        .getAll()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((flashcards) => {
+          const findFlashcard = flashcards.find(
+            (flashcard) => flashcard.key === flashcardID
+          );
 
-        if (findFlashcard) {
-          this.flashcard = findFlashcard;
-        }
-      });
+          if (findFlashcard) {
+            this.flashcard = findFlashcard;
+          }
+        });
     } else {
       this.flashcard.front = this.FRONT_TEMPLATE;
       this.flashcard.back = this.BACK_TEMPLATE;
@@ -83,12 +88,15 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private handleUpdateFlashcard(): void {
-    this.flashcardService.update(this.flashcard).then((_) => {
-      this.toastr.success('Update flashcard successfully!');
-    }).catch((err) => {
-      console.error(err);
-      this.toastr.error('Update flashcard failed!');
-    });
+    this.flashcardService
+      .update(this.flashcard)
+      .then((_) => {
+        this.toastr.success('Update flashcard successfully!');
+      })
+      .catch((err) => {
+        console.error(err);
+        this.toastr.error('Update flashcard failed!');
+      });
   }
 
   private handleAddFlashcard(): void {
@@ -122,7 +130,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.flashcardService.enableShortcutListener();
     this.destroy$.next();
     this.destroy$.complete();
   }
