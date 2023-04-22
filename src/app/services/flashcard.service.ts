@@ -5,7 +5,7 @@ import { FIREBASE_GOOGLE_UID } from './../constants';
 import { CategoryService } from './category.service';
 
 const HIGHLIGHT_TEMPLATE =
-  '<div style="text-align: center;"><span style="background-color: rgb(219, 15, 15);"><font size="3"></font></span></div>';
+  '<div><span style="background-color: rgb(219, 15, 15);">&#8203;</span></div>';
 
 export class Flashcard {
   key: string | undefined;
