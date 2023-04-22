@@ -9,9 +9,8 @@ import { Category, CategoryService } from 'src/app/services/category.service';
 })
 export class CategoryComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  @Input() showLoading = true;
 
-  flashcardCategories: Category[] = [];
+  flashcardCategories: Category[] | undefined;
   selectedCategory: string | undefined;
 
   constructor(public categoryService: CategoryService) {}
@@ -24,7 +23,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(([categories, selectedCategory]) => {
         this.flashcardCategories = categories;
-
         if (selectedCategory) {
           this.selectedCategory = this.flashcardCategories.find(
             (category) => category.key === selectedCategory

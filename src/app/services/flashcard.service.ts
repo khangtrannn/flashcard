@@ -4,10 +4,14 @@ import { Observable, Subject, map, switchMap } from 'rxjs';
 import { FIREBASE_GOOGLE_UID } from './../constants';
 import { CategoryService } from './category.service';
 
-export interface Flashcard {
-  key: string;
-  content: string;
-  category: string;
+const HIGHLIGHT_TEMPLATE =
+  '<div style="text-align: center;"><span style="background-color: rgb(219, 15, 15);"><font size="3"></font></span></div>';
+
+export class Flashcard {
+  key: string | undefined;
+  category: string | undefined | null;
+  content: string | undefined;
+  highlight = HIGHLIGHT_TEMPLATE;
 }
 
 @Injectable({

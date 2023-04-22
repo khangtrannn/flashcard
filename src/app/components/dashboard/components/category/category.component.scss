@@ -1,6 +1,11 @@
 :host ::ng-deep {
   .ng-select.category {
     font-size: 0.875rem;
+    padding-bottom: 0;
+
+    ng-dropdown-panel {
+      margin-top: 1rem;
+    }
 
     .ng-select-container {
       .ng-value-container {

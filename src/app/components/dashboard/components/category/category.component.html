@@ -1,4 +1,4 @@
-<div class="category-wrapper min-h-[70px] min-w-[200px]">
+<div class="category-wrapper min-w-[200px] min-h-[54px]">
   <ng-container *ngIf="flashcardCategories; else loadingCategories">
     <ng-select *ngIf="flashcardCategories.length"
       #category
@@ -12,5 +12,5 @@
 </div>
 
 <ng-template #loadingCategories>
-  <span *ngIf="showLoading" class="text-sm text-white block">Loading categories...</span>
+  <span class="text-sm text-white block pt-7">Loading categories...</span>
 </ng-template>

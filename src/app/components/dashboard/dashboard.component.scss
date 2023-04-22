@@ -10,15 +10,11 @@
       resize: none;
       border-radius: 5px;
       border: 1px solid #3e3e3e !important;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
       font-size: 0.875rem;
       line-height: 1.25rem;
       color: white;
       margin-top: 0;
       padding-top: 1rem !important;
-      min-height: 19rem !important;
-      width: 45rem !important;
 
       &::after, &::before {
         display: none;
@@ -28,6 +24,12 @@
     .angular-editor-placeholder {
       padding-top: 1rem !important;
       font-size: 0.875rem;
+    }
+  }
+
+  angular-editor[name=content] {
+    .angular-editor-textarea {
+      min-height: 10rem !important;
     }
   }
 }

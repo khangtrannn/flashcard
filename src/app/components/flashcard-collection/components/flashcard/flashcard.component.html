@@ -1,1 +1,3 @@
-<div class="text-white" [innerHTML]="content | safeHtml"></div>
+<div *ngIf="highlight" class="text-white" [innerHTML]="highlight | safeHtml"></div>
+<br />
+<div *ngIf="content" class="text-white" [innerHTML]="content | safeHtml"></div>

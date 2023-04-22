@@ -10,7 +10,7 @@
         (swiperight)="carousel.next()"
       >
         <ng-template ngbSlide *ngFor="let flashcard of flashcards">
-          <app-flashcard [content]="flashcard.content"></app-flashcard>
+          <app-flashcard [highlight]="flashcard.highlight" [content]="flashcard.content"></app-flashcard>
         </ng-template>
       </ngb-carousel>
     </ng-container>
@@ -22,5 +22,5 @@
 </ng-template>
 
 <ng-template #noFlashcards>
-  <span class="text-white">No flashcard to show</span>
+  <span class="text-white">No flashcard</span>
 </ng-template>

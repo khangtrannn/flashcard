@@ -20,16 +20,11 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
-  readonly FRONT_TEMPLATE =
-    '<div style="text-align: center;"><span style="background-color: rgb(219, 15, 15);"><font size="3">phrase</font></span></div><div style="text-align: center;"><span style="background-color: rgb(219, 15, 15); font-size: 0.875rem;"><br></span></div><div style="text-align: center;"><span style="text-align: center;">Vietnamese meaning</span><br></div>';
-
+export class DashboardComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   editorConfig = EditorConfig;
-
-  flashcard: Flashcard | undefined;
-
+  flashcard: Flashcard = new Flashcard();
   selectedCategory$ = this.categoryService.getSelectedCategory();
 
   constructor(
@@ -64,15 +59,8 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedCategory$
       .pipe(take(1), takeUntil(this.destroy$))
       .subscribe((selectedCategory) => {
-        // this.flashcard.category = selectedCategory!;
-        // if (!this.flashcard.content || !selectedCategory) {
-        //   return;
-        // }
-        // if (!this.flashcard.key) {
-        //   this.handleAddFlashcard();
-        // } else {
-        //   this.handleUpdateFlashcard();
-        // }
+        this.flashcard.category = selectedCategory;
+        this.handleAddFlashcard();
       });
   }
 
@@ -89,32 +77,20 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private handleAddFlashcard(): void {
-    // this.flashcardService
-    //   .create(this.flashcard)
-    //   .then((_) => {
-    //     this.resetState();
-    //     this.toastr.success('Add new flashcard successfully!');
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //     this.toastr.error('Add new flashcard error!');
-    //   });
-  }
-
-  ngAfterViewInit(): void {
-    this.elementRef.nativeElement
-      .querySelectorAll('angular-editor')
-      .forEach((editor) =>
-        editor
-          .querySelector('.angular-editor-textarea')!
-          .addEventListener('focus', () =>
-            this.flashcardService.flip(editor.getAttribute('name')!)
-          )
-      );
+    this.flashcardService
+      .create(this.flashcard)
+      .then((_) => {
+        this.resetState();
+        this.toastr.success('Add new flashcard successfully!');
+      })
+      .catch((err) => {
+        console.error(err);
+        this.toastr.error('Add new flashcard error!');
+      });
   }
 
   private resetState(): void {
-    // this.flashcard.content = this.FRONT_TEMPLATE;
+    this.flashcard = new Flashcard();
   }
 
   ngOnDestroy(): void {

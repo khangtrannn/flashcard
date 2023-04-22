@@ -2,14 +2,9 @@ export const EditorConfig = {
   editable: true,
   outline: false,
   sanitize: false,
+  showToolbar: false,
   toolbarHiddenButtons: [
-    [
-      'subscript',
-      'superscript',
-      'indent',
-      'outdent',
-      'fontName',
-    ],
+    ['subscript', 'superscript', 'indent', 'outdent', 'fontName'],
     [
       'customClasses',
       'link',
