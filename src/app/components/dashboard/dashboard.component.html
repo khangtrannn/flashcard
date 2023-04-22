@@ -2,23 +2,21 @@
 
 <div class="mt-10 mx-auto grid grid-rows-1 w-fit content-center">
   <div class="flex h-fit gap-14">
-    <div class="rounded-lg p-8 bg-white/[.05] shadow">
+    <div class="rounded-lg p-8">
       <app-category></app-category>
 
-      <angular-editor id="front" name="front" [config]="editorConfig"
+      <!-- <angular-editor id="front" name="front" [config]="editorConfig"
         placeholder="Front" [(ngModel)]="flashcard.front"></angular-editor>
 
       <angular-editor id="back" class="block mt-10" name="back" [config]="editorConfig"
-        placeholder="Back" [(ngModel)]="flashcard.back"></angular-editor>
+        placeholder="Back" [(ngModel)]="flashcard.back"></angular-editor> -->
 
-      <button
+      <!-- <button
         (click)="onSubmitFlashcard()"
-        [class.cursor-not-allowed]="!flashcard.front || !(selectedCategory$ | async)"
+        [class.cursor-not-allowed]="!flashcard.content || !(selectedCategory$ | async)"
         class="mt-4 text-sm w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white focus:outline-none">
         {{ flashcard.key ? 'Update Flashcard' : 'Add Flashcard' }}
-      </button>
+      </button> -->
     </div>
-
-    <app-flashcard [front]="flashcard.front" [back]="flashcard.back"></app-flashcard>
   </div>
 </div>

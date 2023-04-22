@@ -24,17 +24,11 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   readonly FRONT_TEMPLATE =
     '<div style="text-align: center;"><span style="background-color: rgb(219, 15, 15);"><font size="3">phrase</font></span></div><div style="text-align: center;"><span style="background-color: rgb(219, 15, 15); font-size: 0.875rem;"><br></span></div><div style="text-align: center;"><span style="text-align: center;">Vietnamese meaning</span><br></div>';
 
-  readonly BACK_TEMPLATE =
-    '<div style="text-align: center;"><font size="3">Example</font></div>';
-
   private destroy$ = new Subject<void>();
 
   editorConfig = EditorConfig;
 
-  flashcard: Flashcard = {
-    front: '',
-    back: '',
-  };
+  flashcard: Flashcard | undefined;
 
   selectedCategory$ = this.categoryService.getSelectedCategory();
 
@@ -63,9 +57,6 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
             this.flashcard = findFlashcard;
           }
         });
-    } else {
-      this.flashcard.front = this.FRONT_TEMPLATE;
-      this.flashcard.back = this.BACK_TEMPLATE;
     }
   }
 
@@ -73,43 +64,41 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedCategory$
       .pipe(take(1), takeUntil(this.destroy$))
       .subscribe((selectedCategory) => {
-        this.flashcard.category = selectedCategory!;
-
-        if (!this.flashcard.front || !selectedCategory) {
-          return;
-        }
-
-        if (!this.flashcard.key) {
-          this.handleAddFlashcard();
-        } else {
-          this.handleUpdateFlashcard();
-        }
+        // this.flashcard.category = selectedCategory!;
+        // if (!this.flashcard.content || !selectedCategory) {
+        //   return;
+        // }
+        // if (!this.flashcard.key) {
+        //   this.handleAddFlashcard();
+        // } else {
+        //   this.handleUpdateFlashcard();
+        // }
       });
   }
 
   private handleUpdateFlashcard(): void {
-    this.flashcardService
-      .update(this.flashcard)
-      .then((_) => {
-        this.toastr.success('Update flashcard successfully!');
-      })
-      .catch((err) => {
-        console.error(err);
-        this.toastr.error('Update flashcard failed!');
-      });
+    // this.flashcardService
+    //   .update(this.flashcard)
+    //   .then((_) => {
+    //     this.toastr.success('Update flashcard successfully!');
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //     this.toastr.error('Update flashcard failed!');
+    //   });
   }
 
   private handleAddFlashcard(): void {
-    this.flashcardService
-      .create(this.flashcard)
-      .then((_) => {
-        this.resetState();
-        this.toastr.success('Add new flashcard successfully!');
-      })
-      .catch((err) => {
-        console.error(err);
-        this.toastr.error('Add new flashcard error!');
-      });
+    // this.flashcardService
+    //   .create(this.flashcard)
+    //   .then((_) => {
+    //     this.resetState();
+    //     this.toastr.success('Add new flashcard successfully!');
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //     this.toastr.error('Add new flashcard error!');
+    //   });
   }
 
   ngAfterViewInit(): void {
@@ -125,8 +114,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private resetState(): void {
-    this.flashcard.front = this.FRONT_TEMPLATE;
-    this.flashcard.back = this.BACK_TEMPLATE;
+    // this.flashcard.content = this.FRONT_TEMPLATE;
   }
 
   ngOnDestroy(): void {

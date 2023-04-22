@@ -5,10 +5,9 @@ import { FIREBASE_GOOGLE_UID } from './../constants';
 import { CategoryService } from './category.service';
 
 export interface Flashcard {
-  key?: string;
-  front: string;
-  back: string;
-  category?: string;
+  key: string;
+  content: string;
+  category: string;
 }
 
 @Injectable({
