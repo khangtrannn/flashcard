@@ -8,3 +8,4 @@ export const KEY = {
 };
 
 export const FIREBASE_GOOGLE_UID = 'FIREBASE_GOOGLE_UID';
+export const IS_MOBILE = 'IS_MOBILE';

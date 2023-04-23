@@ -3,5 +3,5 @@
 </div>
 
 <div class="fixed bottom-4 right-4">
-  <a routerLink="/dashboard" class="text-white underline text-[0.875rem]">Add</a>
+  <a *ngIf="isMobile" routerLink="/dashboard" class="text-white underline text-[0.875rem]">Add</a>
 </div>

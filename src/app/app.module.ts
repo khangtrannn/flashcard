@@ -28,7 +28,9 @@ import { FlashcardCollectionComponent } from './components/flashcard-collection/
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { HamburgerIconComponent } from './components/menu/components/hamburger-icon/hamburger-icon.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { IS_MOBILE } from './constants';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { DeviceRoutingGuardService } from './services/device-routing-guard.service';
 
 class MyHammerConfig extends HammerGestureConfig {
   override overrides = {
@@ -73,6 +75,13 @@ class MyHammerConfig extends HammerGestureConfig {
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
+    },
+    {
+      provide: IS_MOBILE,
+      useFactory: (deviceRoutingGuardService: DeviceRoutingGuardService) =>
+        deviceRoutingGuardService.isMobileDevice(),
+      deps: [DeviceRoutingGuardService],
+      multi: false,
     },
   ],
   bootstrap: [AppComponent],
