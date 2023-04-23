@@ -9,7 +9,7 @@
         (swipeleft)="flashcardCollection.prev()"
         (swiperight)="flashcardCollection.next()"
       >
-        <ng-template ngbSlide *ngFor="let flashcard of flashcards">
+        <ng-template ngbSlide [id]="flashcard.key!" *ngFor="let flashcard of flashcards">
           <app-flashcard [highlight]="flashcard.highlight" [content]="flashcard.content"></app-flashcard>
         </ng-template>
       </ngb-carousel>

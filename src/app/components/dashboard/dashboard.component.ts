@@ -1,19 +1,13 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Subject, take, takeUntil } from 'rxjs';
 import { CategoryService } from 'src/app/services/category.service';
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import {
   Flashcard,
   FlashcardService,
 } from 'src/app/services/flashcard.service';
 import { EditorConfig } from '../../configs/EditorConfig';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +25,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     public flashcardService: FlashcardService,
     private categoryService: CategoryService,
     private toastr: ToastrService,
-    private elementRef: ElementRef<HTMLDivElement>,
     private activatedRoute: ActivatedRoute
   ) {}
 
@@ -59,21 +52,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.selectedCategory$
       .pipe(take(1), takeUntil(this.destroy$))
       .subscribe((selectedCategory) => {
-        this.flashcard.category = selectedCategory;
-        this.handleAddFlashcard();
+        if (this.flashcard.key) {
+          this.handleUpdateFlashcard();
+        } else {
+          this.flashcard.category = selectedCategory;
+          this.handleAddFlashcard();
+        }
       });
   }
 
   private handleUpdateFlashcard(): void {
-    // this.flashcardService
-    //   .update(this.flashcard)
-    //   .then((_) => {
-    //     this.toastr.success('Update flashcard successfully!');
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //     this.toastr.error('Update flashcard failed!');
-    //   });
+    this.flashcardService
+      .update(this.flashcard)
+      .then((_) => {
+        this.toastr.success('Update flashcard successfully!');
+      })
+      .catch((err) => {
+        console.error(err);
+        this.toastr.error('Update flashcard failed!');
+      });
   }
 
   private handleAddFlashcard(): void {

@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, takeUntil } from 'rxjs';
 import { KEY } from 'src/app/constants';
@@ -25,7 +26,10 @@ export class FlashcardCollectionComponent implements OnInit, OnDestroy {
   @ViewChild('flashcardCollection', { static: false })
   flashcardCollection!: NgbCarousel;
 
-  constructor(private flashcardService: FlashcardService) {}
+  constructor(
+    private flashcardService: FlashcardService,
+    private router: Router
+  ) {}
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
@@ -35,6 +39,14 @@ export class FlashcardCollectionComponent implements OnInit, OnDestroy {
 
     if (event.key === KEY.b) {
       this.flashcardCollection.prev();
+    }
+
+    if (event.key === KEY.e) {
+      this.router.navigate(['/dashboard'], {
+        queryParams: {
+          flashcardId: this.flashcardCollection.activeId,
+        },
+      });
     }
   }
 
