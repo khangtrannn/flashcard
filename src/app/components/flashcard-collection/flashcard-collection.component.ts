@@ -48,6 +48,10 @@ export class FlashcardCollectionComponent implements OnInit, OnDestroy {
         },
       });
     }
+
+    if (event.key === KEY.d) {
+      this.flashcardService.delete(this.flashcardCollection.activeId);
+    }
   }
 
   ngOnInit(): void {
