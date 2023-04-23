@@ -1,5 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, takeUntil } from 'rxjs';
+import { KEY } from 'src/app/constants';
 import {
   Flashcard,
   FlashcardService,
@@ -14,7 +22,21 @@ export class FlashcardCollectionComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   flashcards: Flashcard[] | undefined;
 
+  @ViewChild('flashcardCollection', { static: false })
+  flashcardCollection!: NgbCarousel;
+
   constructor(private flashcardService: FlashcardService) {}
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (event.key === KEY.space) {
+      this.flashcardCollection.next();
+    }
+
+    if (event.key === KEY.b) {
+      this.flashcardCollection.prev();
+    }
+  }
 
   ngOnInit(): void {
     this.flashcardService

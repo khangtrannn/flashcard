@@ -1,13 +1,13 @@
 <div class="flex overflow-hidden itmes-center justify-center">
   <ng-container *ngIf="flashcards; else loading">
     <ng-container *ngIf="flashcards.length; else noFlashcards">
-      <ngb-carousel #carousel
+      <ngb-carousel #flashcardCollection
         [showNavigationArrows]="false"
         [showNavigationIndicators]="false"
         [interval]="0"
         [animation]="false"
-        (swipeleft)="carousel.prev()"
-        (swiperight)="carousel.next()"
+        (swipeleft)="flashcardCollection.prev()"
+        (swiperight)="flashcardCollection.next()"
       >
         <ng-template ngbSlide *ngFor="let flashcard of flashcards">
           <app-flashcard [highlight]="flashcard.highlight" [content]="flashcard.content"></app-flashcard>
